@@ -184,13 +184,12 @@ Hiermit versichere ich, dass diese Arbeit selbst\"{a}ndig verfasst wurde und das
 		\put(0,15){\line(1,0){150}}
 		\put(0,0){(\theauthor)}
 	\end{picture}
-	\clearpage
+	\newpage
 	
 	%%% Abstract
-	\myabstract{%% deutsche Zusammenfassung
-testzusammenfassung}
-{%% englischer abstract
+	\section*{Kurzfassung}{%% deutsche Zusammenfassung
 Ziel dieser Arbeit ist es, für jedes getestete Internetforum automatisch einen numerischen Wert für das gesamte Internetforum zu erzeugen, der angibt, welches Produkt am wahrscheinlichsten in diesem Forum verkauft werden kann.\\  Damit wird dem Problem entgegengewirkt, dass in Internetforen immer mehr, immer schneller Posts veröffentlicht werden, die verkaufsirrelevant sind.Zum Erreichen dieses Ziels werden Unternehmensunterlagen analysiert, die ein bestimmtes Produkt klassifizieren, um Schlagworte zu extrahieren, die dieses Produkt beschreiben. Im Folgenden wird das Deep Web des Internetforums analysiert, also das Internet, das nicht frei zugänglich ist oder von Suchmaschinen indexiert werden kann.  Diese Analyse erlaubt es eine Aussage darüber zu treffen, wie viele Einträge in diesem Forum generell vorhanden sind sowie darüber, wie die Themenverteilung dieser Foreneinträge sich verhält. Anschließend werden von allen Firmenprodukten die zuvor extrahierten Produkt -Schlagworte in diesem Forum gesucht und alle Foreneinträge, die diese Suche ausliefert, gespeichert. Die gesammelten Einträge werden nun durch einen Service analysiert.  Dieser berechnet, mit welcher Wahrscheinlichkeit der Eintrag welcher Produktkategorie angehört und wie groß der Kaufbedarf an dem berechneten Produkt ist in diesem Eintrag ist. Ist ein Forum nach allen Firmenprodukten durchsucht, lässt sich mit der Gesamtanzahl der vorhandenen Foreneinträge und den berechneten Bedarfswahrscheinlichkeiten der Einträge bestimmen, für welches Produkt dieses Forum die höchste Verkaufswahrscheinlichkeit bietet, so dass die Datensammlung in diesem Forum auf das Produkt konzentriert werden kann, das den höchsten Kosten-Nutzen-Wert bietet.Dadurch können die Foren entlastet werden, da nicht mehr alle Foreneinträge aus ihnen abgefragt werden. Die Kosten für die Speicherung werden minimiert, da weniger, jedoch bessere Einträge mit einer höheren Verkaufschance gespeichert werden. Im gleichen Zuge wird die Zeit zwischen der Datensammlung und dem Erkennen einer wahren Verkaufschance drastisch sinken, da die Datenqualität, stark steigen wird, durch Konzentration auf ein Produkt mit der höchsten Verkaufschance in einem Forum.}
+\newpage
 	
 	%%% TOC
 	\tableofcontents
@@ -207,11 +206,13 @@ Ziel dieser Arbeit ist es, für jedes getestete Internetforum automatisch einen 
 	\input{./content/forenrelevanz}
 	\input{./content/evaluation}
 	\input{./content/conclusion}	
+	\input{./content/background}
 	\clearpage
 	%%% BIBLIOGRAPHY
 	%\bibliographystyle{babunsrt3-fl}
+	\nocite{*}
 	\addcontentsline{toc}{section}{Bibliography}
-	\bibliographystyle{babunsrt-fl}
-	\bibliography{projektbib}
+    	\bibliographystyle{babunsrt-fl}
+   	\bibliography{projektbib}
 	
 \end{document}

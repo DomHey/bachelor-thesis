@@ -1,8 +1,7 @@
 \section {Automatisches Registrieren in Foren}
-\subsection{Intro}
 Um an den Inhalt einesd Forums zu gelangen muss in den meisten Fällen zunächst ein Nutzerprofil in dem jeweiligen Forum angelegt werden.Anschließend kann sich mit dem Profil eingeloggt werden und der geschützte Inhalt des Forums, als Nutzer einsehen werden. \\
 Im folgenden werden die Schritte erläutert, die ein automatisiertes Registrieren auf Webseiten versucht zu ermöglichen.
-\subsection{Ermitteln der relevanten Forularen in HTML-Websiten}
+\subsection{Ermittlung der relevanten Formulare in HTML-Webseiten}
 Auf der entsprechenden Registrierungsseite des jeweiligen Forums wird eine Analyse auf dem HTML-Quellcode der Seite durchlaufen.
 Diese sucht sich aus der Webseite jeden Form-Tag heraus.Es wird ein nummerischen Wert berechnet, mit welcher Wahrscheinlichkeit das gerade gefundene Form-Element das Element ist, das die Input-Elemente für den späteren Registrierungsaufruf enthalten. \\
 Es werden Punkte vergeben, wenn in den Attributen des Form-Elements sich bestimmte Schlagworte wie `Signup`, `User`, `Register` etc. wiederfinden. Außerdem muss es sich bei dem Formular um ein POST-Formular handeln, da es bei Absenden des Registrierungsversuches die eingegebenen Informationen wie Nutzername, Passwort und Email im POST-Body mit übermitteln muss.

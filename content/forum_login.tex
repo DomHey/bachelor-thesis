@@ -1,7 +1,6 @@
 \section {Automatisches Einloggen in Foren}
-\subsection{Intro}
  Das Login ist wichtig um die Cookies der Webseite zu erhalten, die dann bei jeder neuen Anfrage an die Webseite wieder mitgesendet werden müssen um zu validieren das die Anfrage von einem eingeloggten Nutzer stammt. Damit wird der geschützte Bereich des Forums zugänglich.
-\subsection{Ermitteln der relevanten Forulare in HTML-Websiten}
+\subsection{Ermittlung der relevanten Forulare in HTML-Webseiten}
 Die Ermittlung der relevanten Login-Form sowie den Input-Feldern erfolgt nach dem Prinzip der Suche nach den relevanten Registrierungsforumularen. Es werden zuerst alle POST-Formulare des HTML-Quellcodes extrahiert und bewertet. Der Unterschied besteht darin, dass die Anzahl der Input-Felder in der Form theoretisch zwischen 2 und 3 liegen müssten, da als Maximum Email, Nutzername und Passwort angegeben werden müssen. Das Minimum ist hingegen Nutzername oder Email und das Passwort. Alle Forumlare mit mehr Eingabemöglichkeiten sind höchst warscheinlich nicht das Loginformular.
 Sollte es mehr als ein Formular geben, das zwischen 2 und 3 Input-Feldern besitzt, müssen die Input-Felder genauer in betracht gezogen werden. \\
 Enthalten diese in ihren Attributen differenzierte Schlagworte wie `login`, `username`, `passwort` oder `email` werden für jedes Auftreten dieser Schlagworte Punkte auf den Punktewert dieser Form aufgerechnet. Weiterhin werden die Input-Typs der Input-Formen analysiert. Bestehen sie aus den Kombinationen, Input-Type = 'text' und der Input-Name = Einer Kombination aus den Worten  `login`, `username` oder `email`, werden weitere Punkte zu dem Score hinzugerechnet. Selbiges gilt für eine Kombination aus Input-Type = password und Input-Name = `password`.\\
