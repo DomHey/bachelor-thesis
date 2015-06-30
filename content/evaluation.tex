@@ -4,33 +4,27 @@ Zum einen soll es möglich sein sich in Internetforen automatisch registrieren u
 Anderseits soll es automatisch möglich sein die Datenbankgröße des Forums durch Suchanfragen zu bestimmen, sowie eine Aussage über die Relevanz eines Forums für ein Unternehmen zu generieren.
 \subsection{Evaluierungsumgebung}
 Für die Evaluation der Thesen werden verschiedene Vorraussetzungen benötigt. Ein Forum, welches einen Registrierungsprozess und einen Loginprozess bereitstellt. Weiterhin muss dieses Forum die Möglichkeit bieten nach bestimmten Begriffen suchen zu können und entsprechende Treffer mit einer eindeutigen ID zurückzugeben.\\
-Dazu muss das Forum zugriff auf eine Datenbankquelle haben. Diese besteht für die Dauer der Evaluation, aus einem Teil der Noise to Opportunity Datenbank mit 50.000 Einträgen. Diese Einträge umfassen einen Posttitel , einen Postinhalt und eine eindeutige Weburl, die als ID benutzt wird. Die Posts sind in einer NoSQL-Datenbank, Elasticsearch, gespeichert. Diese bietet den Vorteil, das mit nur einer Anfrage an die Datenbank in Posttitel und Postinhalt nach einem bestimmten Suchwort gesucht werden kann, und die ersten Top 20 gefundenen Posts zurückgeliefert werden können.\\
+Dazu muss das Forum Zugriff auf eine Datenbankquelle haben. Diese besteht für die Dauer der Evaluation, aus einem Teil der Noise to Opportunity Datenbank mit 50.000 Einträgen. Diese Einträge umfassen einen Posttitel , einen Postinhalt und eine eindeutige Weburl, die als ID benutzt wird. Die Posts sind in einer NoSQL-Datenbank, Elasticsearch, gespeichert. Diese bietet den Vorteil, das mit nur einer Anfrage an die Datenbank in Posttitel und Postinhalt, leicht nach einem bestimmten Suchwort gesucht werden kann, und die ersten 20 gefundenen Posts zurückgeliefert werden können.\\
 Das Forum wird lokal erstellt, um eine vielzahl an Anfragen an ein im Internet verfügbares Forum zu vermeiden. Eine ordentliche Evaluierung könnte diesem Forum durch zu viel Netzwerkverkehr eventuell schaden.\\
-Geschrieben werden alle Programme, die die Thesen umsetzen, mit Hilfe von JavaScript. Das Forum wird auf einem Node-Server laufen. 
+Geschrieben werden alle Programme, die die Thesen umsetzen, mit Hilfe von JavaScript. Das Forum wird auf einem node\.js-Server laufen. 
 \subsection{Aufbau des Forums}
 Das Forum sollte einem orginalen Internetforum möglichst nahe kommen, jedoch gleichzeitig eine Umgestaltung der einzelnen Seiten für Anmelden, Registrieren und Suchen nicht allzu aufwändig machen. Dieses erlaubt ein schnelles debuggen, wenn sich das Programm nicht wie erwartet verhält. Deshalb wird sich bei dem Erstellen des Forums auf die wichtigsten Elemente konzentriert. Diese umfassen eine Login-, eine Registrierungs- und eine Suchseite.
 \subsection{Registrierung im Forum}
 Die häufigste Registrierungsform die man in diversen Internetforen findet bestehen aus 2 Feldern für das Passwort, 2 Feldern für die Email, einem Feld für den Nutzernamen und eine Chekbox, dass die Foren-AGB angenommen werden. Dieses wird simpel duch das folgende Codebeispiel nachgebaut.
 
-\begin{figure}[ht]
+\begin{figure}[h!]
 \begin{lstlisting}[language=HTML5]
 <form action="/reg" method="post">
-	Nutzername: 
-	<input type="text" name="fname"></br>
-	Email: 
-	<input type="text" name="email"></br>
+	Nutzername: <input type="text" name="fname"></br>
+	Email: <input type="text" name="email"></br>
 	Validate Email: 
 	<input type="text" name="re_email"></br>
-	Password: 
-	<input type="password" name="pwd"></br>
+	Password: <input type="password" name="pwd"></br>
 	Validate Password: 
 	<input type="password" name="re_pwd"></br>
-	Accept AGB:
-	<input type="checkbox" name="AGB"></br>
- 		 <input type="hidden" name="val1" 
-            value="hiddenvalue1">
-  		<input type="hidden" name="val2" 
-            value="hiddenvalue2">
+	Accept AGB:<input type="checkbox" name="AGB"></br>
+ 	<input type="hidden" name="val1"  value="val1">
+  	<input type="hidden" name="val2"  value="val2">
 	<input type="submit" value="Submit">
 </form>
 \end{lstlisting}
@@ -38,9 +32,9 @@ Die häufigste Registrierungsform die man in diversen Internetforen findet beste
 \end{figure}
 \newpage
 
-Nun ist es leicht zu Evaluieren, ob der Registrierungsprozess erfolgreich sein würde. Zu erwaren wäre ein POST-Request an die Toplevel Domain + Formaction mit den Postparametern fname,email,re\_email,pwd,re\_pwd,AGB , sowie den hidden Key-Value-Pairs, val1=hiddenvalue1 und val2=hiddenvalue2.\\
+Aus Figure 1  ist es leicht zu Evaluieren, ob der Registrierungsprozess erfolgreich sein würde. Zu erwaren wäre ein POST-Request an die Toplevel Domain + Formaction mit den Postparametern fname, email, re\_email, pwd, re\_pwd, AGB, sowie den hidden Key-Value-Pairs, val1=hiddenvalue1 und val2=hiddenvalue2.\\
 In die Postparameter sollten in die entsprechenden Felder, fname, email und pwd jeweils der Name, die Email und das Passwort eingetragen, sowie in den re\_email, re\_pwd jeweils die Email bestätigt und das Passwort bestätigt sein, indem sie nochmals eingetippt sind.\\
-Ist der HTTP-Server gestartet und wird die Registrierungsseite analysiert und der folgenede Request an den Server gesendet :\\
+Ist der HTTP-Server gestartet und wird die Registrierungsseite analysiert und der folgenede Request an den Server gesendet :
 
 \begin{figure}[ht]
 \begin{lstlisting}[language=HTML5]
@@ -55,14 +49,13 @@ Ist der HTTP-Server gestartet und wird die Registrierungsseite analysiert und de
   fname: 'Dominik' }
 verification email to : jpm96353@adiaq.com
 \end{lstlisting}
-\caption{Inhalt des Post-Requests, den der Client an das Forum bei einem Registrierungsaufruf gesendet hat}
+\caption{Inhalt des Post-Requests, den der Client an das Forum bei einem Registrierungsaufruf sendet}
 \end{figure}
 
-Zu verzeichen ist, dass sich der Client eine eigene Email angelegt hat, diese stammt von der Internetseite www.10minutemail.com.
-Diese Internetseite, stellt für 10 Minuten eine kostenlose Emailadresse zur Verfügung, mit der Emails empfangen und gesendet werden können.
-Die Registrierungsaufforderung wurde an die richtige Url des Servers gesendet, welches aus dem /reg ersichtlich wird. Weiterhin sind alle erforderlichen Parameter des Post-Requestes entsprechend ausgefüllt, und auch die Wiederholungsfelder von Email und Passwort sind korrekt ausgefüllt. Die Checkbox für die AGB ist angekreuzt worden und auch alle versteckten Input-Felder der Form mit übertragen. Insgesamt ist dieses eine gültige Registrierungsanfrage, welche der Server mit einer Validierungsemail an die angegebene Emailadresse quittiert.
-\newpage
-Der Client überprüft nun alle 5 Sekunden ob die Validierungsemail eingegangen ist. Sollte dieses der Fall sein wird der Link zu der Email aufgerufen, die Email analysiert und jeder darin befindliche Link aufgerufen.
+Zu verzeichen ist, dass sich der Client eine eigene Email angelegt hat, diese stammt von der Internetseite 10minutemail\footnote{https://10minutemail.net/ checked: 10.06.2015}.
+Diese Internetseite, stellt für 10 Minuten eine kostenlose Emailadresse zur Verfügung, mit der Emails empfangen und gesendet werden können. Die Registrierungsaufforderung wurde an die richtige Url des Servers gesendet, welches aus dem /reg ersichtlich wird. Weiterhin sind alle erforderlichen Parameter des Post-Requestes entsprechend ausgefüllt, und auch die Wiederholungsfelder von Email und Passwort sind korrekt ausgefüllt. Die Checkbox für die AGB ist angekreuzt worden und auch alle versteckten Input-Felder der Form mit übertragen. Insgesamt ist dieses eine gültige Registrierungsanfrage, welche der Server mit einer Validierungsemail an die angegebene Emailadresse quittiert.
+
+Der Client überprüft alle 5 Sekunden ob die Validierungsemail eingegangen ist. Sollte dieses der Fall sein wird der Link zu der Email aufgerufen, die Email analysiert und jeder darin befindliche Link aufgerufen. Sollte innerhalb von 10 Minuten keine neue Email eingegangen sein, wird der Registrierungsversuch als gescheitert angesehen und dem Nutzer mitgeteilt, denn die Emailadresse ist nur 10 Minuten valide.
 
 \begin{figure}[ht]
 \begin{lstlisting}[language=HTML5]
@@ -77,7 +70,6 @@ clicked: http://localhost:12345/validateUser?user=jpm96353@adiaq.com
 \caption{Client wartet auf Registrierungsemail und ruft alle Links in der Email auf.}
 \end{figure}
 
-
 Der Validierungsversuch wird nun an das Forum gesendet, welches den Nuter als aktiven Nutzer validiert.
 
 \begin{figure}[ht]
@@ -90,7 +82,6 @@ jpm96353@adiaq.com
 \end{figure}
 
 Sollte der Registrierungsprozess nicht funktionieren, kann die Registrierungsform nachgebaut werden, gegebenfalls Änderungen an den Feldbewertungsmetriken gemacht werden und dann erneut ausprobieren, ohne Webforen zu belasten. Es gibt auch die Möglichkeit für das Programm den Registrierungsschritt zu überspringen, wenn der Nutzer schon einen Nutzeraccount per Hand angelegt hat, kann er das dem Programm über Eingabeparameter mitteilen. Anstatt sich neu zu registrieren, nutzt er nun den vorhandenen Nutzeraccount.
-\newpage
 
 \subsection{Forenlogin}
 Der Forenlogin sollte bei nicht angegebenen Logindaten mit den zuvor generierten Daten ausgeführt werden, werden Daten angegeben sollten diese auch benutzt werden. Der Loginrequest sollte 3 Parameter enthalten, einmal den Nutzernamen und einmal das Passwort. Die Checkbox gibt an ob man auf der Website eingeloggt bleiben möchte, um bei einem späteren Besuch nicht nochmal die Nutzerdaten eingeben zu müssen. Das sind die gängigsten Loginformulare, die im Internet herrschen.
@@ -109,8 +100,9 @@ Der Forenlogin sollte bei nicht angegebenen Logindaten mit den zuvor generierten
 \end{lstlisting}
 \caption{HTML-Code der die Loginseite des Forums erstellt}
 \end{figure}
+\newpage
 
-\begin{figure}[ht]
+\begin{figure}[h!]
 \begin{lstlisting}[language=HTML5]
 loginattempt: 
 {fname:'Dominik',
@@ -120,9 +112,9 @@ loginattempt:
 \caption{Eingehende Loginanfrage des Clients im Forum}
 \end{figure}
 
-Es ist zu sehen, das alle erforderlichen Daten korrekt ausgefüllt wurden. Auch wenn die Loginform Usernamen und Email abfragen sollte, wird ein valider Loginrequest abgesendet.
+In Figure 6 ist zu sehen, dass alle erforderlichen Daten korrekt ausgefüllt wurden.
 
-\begin{figure}[ht]
+\begin{figure}[h!]
 \begin{lstlisting}[language=HTML5]
 loginattempt:
 {email: 'jpm96353@adiaq.com',
@@ -132,10 +124,9 @@ loginattempt:
 \end{lstlisting}
 \caption{Eingehende Loginanfrage des Clients im Forum, mit Nutzername und Email}
 \end{figure}
+Figure 7 zeigt, dass wenn die Loginform Usernamen und Email abfragen sollte, wird ein valider Loginrequest abgesendet wird.
 
-Auch etwaige versteckte Input-Felder werden korrekt gefunden und die Key-Value Paare in dem POST-Request mit übergeben.
-
-\begin{figure}[ht]
+\begin{figure}[h!]
 \begin{lstlisting}[language=HTML5]
 loginattempt:
 {email: 'jpm96353@adiaq.com',
@@ -146,6 +137,9 @@ loginattempt:
 \end{lstlisting}
 \caption{Eingehende Loginanfrage des Clients im Forum, mit versteckten Attributen}
 \end{figure}
+
+Auch etwaige versteckte Input-Felder werden korrekt gefunden und die Key-Value Paare in dem POST-Request mit übergeben (Figure 8).
+\newpage
 
 Alle nachgebauten Loginseiten diverser im Internet gefundenen Seiten wurden im händischen Test erfolgreich ausgefüllt und die zu erwartende Loginanfrage an den Server gesendet.\\
 Es ist programmatisch möglich sich in Foren automatisch zu registrieren und anzumelden. Um die erste Therorie vollständig zu evaluieren müssen naach dem Loginvorgang nun noch relevante Posts zu den jeweiligen Firmenprodukten aus dem Forum extrahiert werden.\\
@@ -158,11 +152,12 @@ successfull login from: jpm96353@adiaq.com
 send 302 to redirect to /main
 /main
 \end{lstlisting}
-\caption{Erfolgreicher Login im Forum und Redirect zur Hauptseite}
+\caption{Erfolgreicher Login im Forum und Redirect des Clients zur Hauptseite}
 \end{figure}
 
 Der Client überprüft  bei jeder Anfrage an den Server ob der Statuscode sich von 200 (OK) unterscheidet. Sollte es wie in diesem Fall ein 302 (Redirect) sein, wird automatisch die neue Url mit einem Get-Request nachgeladen, damit das neue HTML analysiert werden kann im nächsten Schritt. In diesem Fall wird die Main- Page des Forums als nächstes geladen.
 
+\newpage
 
 \subsection{Suchen im Forum}
 \begin{figure}[ht]
@@ -195,7 +190,6 @@ Der Client erkennt automatisch das er auf eine andere Seite verwiesen wurde und 
 
 Dieses HTML wird nach einer Suchform durchsucht. Diese befindet sich meist ein einer Get-Form. Da der Request ein get Request ist wird das Suchwort in der Url codiert. Der Name des Key-Value-Paares, welches für die Übermittelung zuständig ist, wird aus den Input-Feldern in der Form generiert. Dieses Attribut hat meist in den Namen `q` oder `search`. Der Client findet diese Suchform und sendet die Suchanfrage an den Server.
 
-\newpage
 
 \begin{figure}[ht]
 \begin{lstlisting}[language=HTML5]
@@ -249,8 +243,8 @@ dispatcher.onGet("/search", function(req, res) {
 \caption{Erstellung der Ergebnisseite auf eine Suchanfrage im Forum}
 \end{figure}
 
-Hier wird für jede Suchanfrage das HTML erstellt, das die Links zu den jeweiligen passenden Dokumenten enthält.
-Auch ein statischer Link wird plaziert, welcher dann von dem Client entfernt werden sollte, da er in mehr als der Hälfte der Anfragen vorhanden ist.
+In Figure 14 wird für jede Suchanfrage das HTML erstellt, das die Links zu den jeweiligen passenden Dokumenten enthält. Diese Links stammen aus der Datenbankabfrage mit dem entsprechenden Suchwort.
+Ein statischer Link wird plaziert. Diesesr soll die statischen Links auf Internetseiten simulieren, welcher dann von dem Client entfernt werden sollte, da er in mehr als der Hälfte der Anfragen vorhanden ist und somit wahrscheinlich kein Link zu einem Post darstellt.
 
 \begin{figure}[h!]
 \begin{lstlisting}[language=HTML5]
@@ -280,7 +274,8 @@ Auch ein statischer Link wird plaziert, welcher dann von dem Client entfernt wer
 \caption{Gesammelte Dokumente des Clients auf die 10 Suchanfragen}
 \end{figure}
 
-Bei 10 Suchanfragen an die Datenbank, mit zufälligen englischen Wörtern wurden 6 Dokumente in der Testdatenbank gefunden. Keines wurde doppelt getroffen und der statische Link wurde entfernt. Die verbleibenden Links können nun mit einem GET-Request an den entsprechenden Link herruntergeladen und indexiert werden.
+Bei 10 Suchanfragen an die Datenbank (Figure 15), mit zufälligen englischen Wörtern wurden 6 Dokumente in der Testdatenbank gefunden (Figure 16). Keines wurde doppelt getroffen und der statische Link wurde entfernt. Die verbleibenden Links können nun mit einem GET-Request an den entsprechenden Link herruntergeladen und indexiert werden.
+\newpage
 
 \begin{figure}[h!]
 \includegraphics{./images/postdownload.png}
@@ -289,13 +284,13 @@ Bei 10 Suchanfragen an die Datenbank, mit zufälligen englischen Wörtern wurden
 
 
 Es wurden erfolgreich die 6 Dokumente des Forums herruntergeladen, die das Forum auf die 10 Suchanfragen ausgeliefert hat.
-Damit ist gezeigt, das es möglich ist sich automatisch in Foren zu registrieren , einzuloggen und nach bestimmten Firmenspezifischen Schlagworten für Produkte zu suchen.
+Damit ist gezeigt, das es möglich ist sich automatisch in Foren zu registrieren , einzuloggen und nach bestimmten (firmenspezifischen) Schlagworten für Produkte zu suchen.
 
 \subsection{Bestimmung der Forenrelevanz}
 
 Es geht darum zu evaluieren, ob eine Vorhersage darüber zu treffen, wie groß eine Forendatenbank ist und wie relevant dieses Forum für ein jeweiliges Unternehmen ist, erfüllbar ist.
 
-Dazu wird zunächst die Datenbankgröße bestimmt wie in Kapitel [] beschrieben. Dafür wurde die Testdatenbank in 3 Segemente geteilt. Segement 1 enthält nur Posts aus Forum 1, Segement 2 nur aus Forum 2 und Segement 3 nur Posts aus Forum 3. 
+Es wird zunächst die Datenbankgröße bestimmt wie in Kapitel [] beschrieben. Die Testdatenbank wurde in 3 Segemente geteilt. Segement 1 enthält nur Posts aus Forum 1, Segement 2 nur aus Forum 2 und Segement 3 nur Posts aus Forum 3. 
 Segement 1 und 2 beinhalten englische Posts, wohingegen Segement 3 meist deutsche Posts enthält. Die Postanzahl aller 3 Segemente ist bekannt. Um eine realistische Einschätzung zu erhalten, wie zuverlässig die Vorhersage der Gesamtdatenbankgröße ist, wurde der Test für jedes Segement 3 mal wiederholt. Ein Testdurchlauf besteht aus 3 mal 500 zufälligen Wörtern, die an die Datenbank in der passenden Sprache gesendet werden. Die ermitteltelten Datenbankgrößen nach 500 Wörtern werden addiert und durch die Gesamtanzahl der Testläufe dividiert und danach mit der bekannten Gesamtanzahl der Posts in dem Datenbanksegment verglichen.
 
 \begin{table}[h!]
@@ -313,7 +308,7 @@ Fehler & +4\% & -5\% & -1\% \\ \hline
 
 \newpage
 
-Der Fehler beträgt maximal 5\% , dieses bestätigten die zwei weiteren Testdurchläufe. Damit ist eine Vorraussage einer Forendatenbank bis auf 10\% Differenz genau möglich sein.\\
+Der Fehler beträgt maximal 5\% , dieses bestätigten die zwei weiteren Testdurchläufe. Damit ist eine Vorraussage einer Forendatenbank bis auf 10\% Differenz genau möglich sein.
 
 Im nächsten Schritt sollen die einzelnen Produkte in dem Forum gesucht werden. Dazu werden, wie in Kapitel[] beschrieben, beschreibende Wörter für jedes einzelnde Produkt generiert. Diese Keywords werden gesucht und die Datenbankgröße aufgrund des Verhältnisses zwischen überlappenden und einzigartigen Dokumenten, wie in Kapitel[] beschreiben, berechnet. Die Datenbank die zu Testzwecken verwedet wurde enthält 21220 Posts.
 
@@ -325,11 +320,11 @@ CRM & 2386 \\ \hline
 HCM & 3138 \\ \hline
 ECOM & 3641  \\ \hline
 LVM & 1769 \\ \hline
+Gesamt & 10934 \\ \hline
 \end{tabular}
-\caption{Anzahl der Dokumente je Kategorie in der Testdatenbank}
+\caption{Anzahl der Dokumente je Kategorie in der Testdatenbank. Der Rest der Posts konnte keinem Produkt eindeutig zugeordnet werden.}
 \end{table}
 
-Der Rest der Posts konnte keinem Produkt eindeutig zugeordnet werden.
 \newpage
 
 \begin{table}[h!]
@@ -344,7 +339,7 @@ LVM & 39541 & +2235 \%\\ \hline
 \caption{Errechnete Datenbankgröße nach Produkt mit Suchworten nach tf-idf Maß}
 \end{table}
 
-Zu verzeichnen ist das die Größe der einzelnen Produktkategorien maßlos überschätzt wurde. Deshalb wird zur Ergebnisverbesserung ein zusätzlicher Schritt eingefügt. Es werden wie bisher die Keywords zu den jeweiligen Produkten im Forum gesucht, jedoch bevor der Post zur Berechnung des Gesamtcorpus beiträgt, durch einen Klassifizierungsservice analysiert. Dieser bestimmt aus einem gegebenen Text, auf Grundlage der selben Broschüren, die zur Berechnung der tfidf- Keywords verwendet werden, welchem Produkt der Post am ehesten entspricht.
+Zu verzeichnen ist das die Größe der einzelnen Produktkategorien maßlos überschätzt wurde. Deshalb wird zur Ergebnisverbesserung ein zusätzlicher Schritt eingefügt. Es werden wie bisher die Keywords zu den jeweiligen Produkten im Forum gesucht, jedoch bevor der Post zur Berechnung des Gesamtcorpus beiträgt, durch einen Klassifizierungsservice \cite{n2o} analysiert. Dieser bestimmt aus einem gegebenen Text, auf Grundlage der selben Broschüren, die zur Berechnung der tf-idf- Keywords verwendet werden, welchem Produkt der Post am ehesten entspricht.
 
 \begin{figure}[h!]
 \begin{lstlisting}[language=HTML5]
@@ -385,8 +380,8 @@ http://192.168.42.54:9001/predictions?text=Hi, I want to by an CRM product
 \caption{Antwort des Analyseservices mit entsprechender Klassifizierung des Textes}
 \end{figure}
 
-Dieser Post würde als CRM - Post richtig eingestuft werden. Wenn gerade die CRM - Froendatenbankgröße berechnet werden sollte, wird dieser Post mit in die Berechnung einfließen. Alle Post die als nicht CRM - Posts eingestuft werden werden in dieser speziefischen Ermittlung nicht betrachtet.\\
-Mit maximal 100 generierten Keywords gewichtet nach der höchsten tfIdf werden folgende Resultate erricht.
+Der Posttext (Figure 18) würde als CRM Post richtig eingestuft werden. Wenn gerade die CRM Forendatenbankgröße berechnet werden sollte, wird dieser Post mit in die Berechnung einfließen. Alle Post die als nicht CRM Posts eingestuft werden, werden in dieser speziefischen Ermittlung nicht betrachtet.\\
+Mit maximal 100 generierten Keywords gewichtet nach der höchsten tf-Idf werden folgende Resultate erricht.
 
 \begin{table}
 \begin{tabular}{ | p{3cm} | l | l |}
@@ -397,8 +392,8 @@ HCM & 2730 & -14 \% \\ \hline
 ECOM & 4388 & +17\% \\ \hline
 LVM & 1670 & -5\% \\ \hline
 \end{tabular}
-\caption{Errechnete Datenbankgröße je Produkt mit zufälligen tf-idf Wörtern und Analyseservice}
+\caption{Errechnete Datenbankgröße je Produkt mit sortierten tf-idf Wörtern und Analyseservice}
 \end{table}
 
 Die anderen 2 Testsegmente der Datenbank konnten mit ähnlich genauen Fehlern überprüft werden.
-Ein Fehler von maximal 20\% mit nur maximal 100 Suchanfragen ist eine zufreidenstellende Größe. Aus der Datenbankgröße und den spezifischen Produktdatenbankgrößen lässt sich sagen ob das Forum zum Verkauf eines Produktes geeignet ist oder nicht.
+Ein Fehler von maximal 20\% mit nur maximal 100 Suchanfragen ist eine zufreidenstellende Größe. Aus der Datenbankgröße und den spezifischen Produktdatenbankgrößen lässt sich bestimmen ob das Forum zum Verkauf eines Produktes geeignet ist oder nicht.
