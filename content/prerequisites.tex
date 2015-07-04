@@ -1,4 +1,4 @@
-\section{Vorraussetzungen}
+\section{Voraussetzungen}
 Um eine Aussage darüber treffen zu können, wie relevant ein Forum für ein Unternehmen ist, muss dieses Forum durchsuchbar gemacht werden.
 Vorraussetzung für ein programmatisches durchsuchen eines Forums ist ein erfolgreicher Login in dem Forum, entweder mit einem vorhandenen Nutzeraccount oder durch eine automatische Registrierung und dann einem Login mit den gerade erstellten Daten.
 Der Login in das Forum ist nötig um den geschützten Inhalt des Forums für das Programm sichtbar zu machen. Deshalb wird in diesem Kapitel die Theorie für ein erfolgreiches Registrieren, Einloggen und Durchsuchen eines Forums beschrieben.
@@ -9,6 +9,8 @@ Der Login in das Forum ist nötig um den geschützten Inhalt des Forums für das
 \subsection {Automatisches Registrieren in Foren}
 Um an den Inhalt eines Forums zu gelangen muss in den meisten Fällen zunächst ein Nutzerprofil in dem jeweiligen Forum angelegt werden.Anschließend kann sich mit dem Profil eingeloggt werden und der geschützte Inhalt des Forums, als Nutzer einsehen werden. \\
 Im folgenden werden die Schritte erläutert, die ein automatisiertes Registrieren auf Webseiten versucht zu ermöglichen.
+Eine Übersicht zu dem Registrierungsprozess kann im Anhang (Figure 20) gefunden werden.
+
 \subsubsection{Ermittlung der relevanten Formulare in HTML-Webseiten}
 Auf der entsprechenden Registrierungsseite des jeweiligen Forums wird eine Analyse auf dem HTML-Quellcode der Seite durchlaufen.
 Diese sucht sich aus der Webseite jeden Form-Tag heraus.Es wird ein nummerischen Wert berechnet, mit welcher Wahrscheinlichkeit das gerade gefundene Form-Element das Element ist, das die Input-Elemente für den späteren Registrierungsaufruf enthalten. \\
@@ -39,6 +41,7 @@ Wird nun die Email des Forums in dem Posteingang gefunden, werden alle Hyperlink
 
 \subsection {Automatisches Einloggen in Foren}
 Das Login ist wichtig um die Cookies der Webseite zu erhalten, die dann bei jeder neuen Anfrage an die Webseite wieder mitgesendet werden müssen um zu validieren das die Anfrage von einem eingeloggten Nutzer stammt. Damit wird der geschützte Bereich des Forums zugänglich.
+Eine Übersicht zu dem Loginprozess kann im Anhang (Figure 21) gefunden werden.
 \subsubsection{Ermittlung der relevanten Formulare in HTML-Webseiten}
 Die Ermittlung der relevanten Login-Form sowie den Input-Feldern erfolgt nach dem Prinzip der Suche nach den relevanten Registrierungsformularen. Es werden zuerst alle POST-Formulare des HTML-Quellcodes extrahiert und bewertet. Der Unterschied besteht darin, dass die Anzahl der Input-Felder in der Form theoretisch zwischen 2 und 3 liegen müssten, da als Maximum Email, Nutzername und Passwort angegeben werden müssen. Das Minimum ist hingegen Nutzername oder Email und das Passwort. Alle Formulare mit mehr Eingabemöglichkeiten sind höchst warscheinlich nicht das Loginformular.
 Sollte es mehr als ein Formular geben, das zwischen 2 und 3 Input-Feldern besitzt, müssen die Input-Felder genauer in Betracht gezogen werden. \\
@@ -66,13 +69,18 @@ Sollte in dem Resopnse-Header ein Feld `Location` existieren bedeutet das, dass 
 
 \subsection{Ermitteln der Größe der Forendatenbank}
 Die Ermittelung der Datenbankgröße wird bei dem späteren treffen der Aussage über die Forenrelevanz für ein Produkt wichtig.
-Es ist wichtig die annähernde Anzahl der Posts in dem Forum zu kennen, um bei einer Langzeitanalyse festzustellen, wie schnell das Forum wächst, bzw. wie viele Einträge pro Tag hinzu kommen. Daraus kann ermittelt werden, mit welcher Wahrscheinlichkeit neue Beiträge zu einem Verkaufsprodukt mit welcher Frequenz eingestellt werden.\\
+Es ist wichtig die annähernde Anzahl der Posts in dem Forum zu kennen, um bei einer Langzeitanalyse festzustellen, wie schnell das Forum wächst, bzw. wie viele Einträge pro Tag hinzu kommen. Daraus kann ermittelt werden, mit welcher Wahrscheinlichkeit neue Beiträge zu einem Verkaufsprodukt mit welcher Frequenz eingestellt werden.
+Eine Übersicht zu dem Suchprozess kann im Anhang (Figure 22) gefunden werden.\\
 \subsubsection{Ermitteln des Suchfeldes}
 Um die Datenbank analysieren zu können muss zunächst das Suchfeld, welches es in den meisten Foren gibt, um die vorhandenen Posts zu durchsuchen, gefunden werden.
 Dazu wird das HTML das nach dem erfolgreichen Einloggen auf weitere Form-Felder durchsucht. Die gefundenen Felder werden klassifiziert indem sich die Namen-Attribute der Input-Felder dieser Form angeschaut werden. Sollte dieser Name aus nur einem Buchstaben bestehen, vorzugsweise ein `q`, da das bei den meisten Webseiten für den Paramater query steht, werden Punkte vergeben.
 Danach werden alle Attribute der Input-Felder der Form durchsucht. Sollten in den Attributen die Zeichenketten `search` oder `suche` vorkommen werden weitere Punkte vergeben.\\
 Zum Schluss ist die Form mit dem höchsten Punktwert, die Form die am wahrscheinlichsten die Suchbar als Input-Feld enthält.
-Nun wird der Pfad der Suche aus der Form extrahiert, indem das `action` Attribut der Form ausgelesen wird. Dieser Wert wird an die Toplevel Domain angefügt und stellt die Suchurl dar. Der Queryparameter wird aus dem Name-Attribut des Input-Feldes extrahiert und an die Suchurl angehangen. Sollte zum Beispiel das Name-Attribut des Input-Feldes ein `q` sein würde sich die vorläufige Suchurl so zusammensetzen: `Toplevel Url` + `?q=`. An den Queryparameter q werden im folgenden die einzelnen Suchworte, die zur Ermittelung der Datenbankgröße beitragen angehängt und an den Server abgesendet.\\
+Nun wird der Pfad der Suche aus der Form extrahiert, indem das `action` Attribut der Form ausgelesen wird. Dieser Wert wird an die Toplevel Domain angefügt und stellt die Suchurl dar. Der Queryparameter wird aus dem Name-Attribut des Input-Feldes extrahiert und an die Suchurl angehangen. Sollte zum Beispiel das Name-Attribut des Input-Feldes ein `q` sein würde sich die vorläufige Suchurl so zusammensetzen:
+
+\[ URL := `Domainname` + action + ?q= \]
+
+An den Queryparameter q werden im folgenden die einzelnen Suchworte, die zur Ermittelung der Datenbankgröße beitragen angehängt und an den Server abgesendet.\\
 Diese Wörter, die die Datenbank bestimmen sollen werden aus einer Datei gelesen, die die am häufigsten benutzen Wörter in einer Sprache sortiert auflistet. Aus diesen Wörtern werden zufällig 500 Wörter gezogen ,in die Url eingefügt und abgesendet.\\
 \subsubsection{Berechnung der Datenbankgröße}
 Nach jedem abgesendeten Request wird der zurückgegebene Inhalt analysiert. Dieser enthält die Posts, die von der 
