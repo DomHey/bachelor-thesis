@@ -116,7 +116,7 @@ Bei der erstmaligen Registrierung in einem Forum wird oft eine Email von dem For
 Nun sind alle Key-Value Paare im Post-Body der Registrierungsanfrage valide und die Anfrage kann abgesendet werden.
 Die URL, an die der Registrierungsversuch gesendet wird, setzt sich aus der Top-Level-Domain der Webseite und der `action`- value des POST- Formulares, sowie dem generierten POST-Body, zusammen.
 
-\subsubsection{Bestätigen des Registrierungslinks in der Registrierungsemail}
+\subsubsection{Bestätigen des Registrierungslinks in der Registrierungs-Email}
 Nachdem die Registrierungsaufforderung im Forum eingeht, wird eine Bestätigungsmail an die Email-Adresse gesendet.
 Um diese Email nun abrufen zu können, wird alle 5 Sekunden die Seite neu geladen, damit eine etwaige neue Email angezeigt wird. Da die Email-Webseite keinen Login erfordert, wird die Zuordnung zwischen Nutzer und zugehörigen Emails über Cookies gelöst. Diese Cookies werden beim ersten Besuchen der Webseite, wenn die Email erstellt wird, im Response-header an den Nutzer mit übergeben. Wenn bei dem programmatischen Neuladen der Webseite diese Cookies mitgesendet werden, können Emails, die an die Adresse gehen, abgerufen werden. Bei fehlen der Cookies würde immer eine neue Emailadresse angelegt.\\
 Wird nun die Email des Forums in dem Posteingang gefunden, werden alle Hyperlinks aus dem Email-Inhalt extrahiert und einmal mit einem GET-Request aufgerufen. Dieses sichert, dass das angelegte Nutzerprofil in dem Forum aktiviert, validiert und zum einloggen freigeschaltet wird.
