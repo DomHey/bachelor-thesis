@@ -9,7 +9,7 @@ Der Login in das Forum ist nötig um den geschützten Inhalt des Forums für das
 \subsection {Automatisches Registrieren in Foren}
 Um an den Inhalt eines Forums zu gelangen muss in den meisten Fällen zunächst ein Nutzerprofil in dem jeweiligen Forum angelegt werden. Anschließend kann sich mit dem Profil eingeloggt und der geschützte Inhalt des Forums als Nutzer eingesehen werden. \\
 Im Folgenden werden die Schritte erläutert, die ein automatisiertes Registrieren auf Webseiten zu ermöglichen versucht.
-Eine Übersicht zu dem Registrierungsprozess ist im Anhang (Figure 20) zu sehen.
+Eine Übersicht zu dem Registrierungsprozess ist im Anhang (Abbildung 20) zu sehen.
 
 \subsubsection{Ermittlung der relevanten Formulare in HTML-Webseiten}
 Auf der entsprechenden Registrierungsseite des jeweiligen Forums wird eine Analyse auf dem HTML-Quellcode der Seite durchlaufen.
@@ -96,7 +96,7 @@ email & 88 \\ \hline
 mail & 5 \\ \hline
 useremail & 2 \\ \hline
 \end{tabular}
-\caption{Verteilung derEmailparameternamen in 100 Foren}
+\caption{Verteilung der Emailparameternamen in 100 Foren}
 \end{table}
 
 5 Webseiten erforderten für die Registrierung keine Angabe einer Emailadresse.
@@ -127,7 +127,7 @@ Wird nun die Email des Forums in dem Posteingang gefunden, werden alle Hyperlink
 
 \subsection {Automatisches Einloggen in Foren}
 Das Login ist wichtig, um die Cookies der Webseite zu erhalten, die dann bei jeder neuen Anfrage an die Webseite wieder mitgesendet werden müssen um zu validieren, dass die Anfrage von einem eingeloggten Nutzer stammt. Damit wird der geschützte Bereich des Forums zugänglich.
-Eine Übersicht zu dem Loginprozess kann im Anhang (Figure 21) gefunden werden.
+Eine Übersicht zu dem Loginprozess kann im Anhang (Abbildung 21) gefunden werden.
 
 \subsubsection{Ermittlung der relevanten Formulare in HTML-Webseiten}
 Die Ermittlung der relevanten Login-Form sowie von Input-Feldern erfolgt nach dem Prinzip der Suche nach den relevanten Registrierungsformularen. Es werden zuerst alle POST-Formulare des HTML-Quellcodes extrahiert und bewertet. Der Unterschied besteht darin, dass die Anzahl der Input-Felder in der Form theoretisch zwischen 2 und 3 liegen müsste, da als Maximum Email, Nutzername und Passwort angegeben werden müssen. Das Minimum ist hingegen Nutzername oder Email und das Passwort. Alle Formulare mit mehr Eingabemöglichkeiten sind höchstwarscheinlich nicht das Login-Formular.
@@ -148,13 +148,14 @@ username & 16 \\ \hline
 password & 3 \\ \hline
 andere & 5 \\ \hline
 \end{tabular}
-\caption{Verteilung derAttributnamen in Loginformen in 100 Foren, mit Input-Typ = `text`}
+\caption{Verteilung der Attributnamen in Loginformen in 100 Foren, mit Input-Typ = `text`}
 \end{table}
 
 
 
 Selbiges gilt für eine Kombination aus Input-Typ = `password` und Input-Namen = `password`.
 \[Inputtype = `password` \wedge Inputname = `password`\]
+\newpage
 \begin{table}[h!]
 \centering 
 \begin{tabular}{ | p{3cm} | p{3cm}|} \hline
@@ -164,10 +165,10 @@ pass & 3 \\ \hline
 pwd & 2 \\ \hline
 andere & 5 \\ \hline
 \end{tabular}
-\caption{Verteilung derAttributnamen in Loginformen in 100 Foren, mit Input-Typ = `password`}
+\caption{Verteilung der Attributnamen in Loginformen in 100 Foren, mit Input-Typ = `password`}
 \end{table}
 
-4 der Foren die, die auch keine Registrierung erforderten, erforderten auch kein Login. Bei den fehlenden 3 Foren hatte das Passwort den Input-Typ `text`.
+4 der Foren, die, die auch keine Registrierung erforderten, erforderten auch kein Login. Bei den fehlenden 3 Foren hatte das Passwort den Input-Typ `text`.
 Sollte die Form genau ein Input-Feld mit dem Type = `password`, ein Input-Feld mit dem Type = `text ` und eine Checkbox haben, ist diese Form am wahrscheinlichsten die Login-Form. Sie bestünde aus einem Feld für den Usernamen oder Email, einem Passwortfeld und einer Checkbox, ob ein Angemeldetbleiben erwünscht ist. Aus den 100 getesteten Webseiten bestanden 72 \% der Loginseiten aus diesem Schema.
 
 Sind alle Formen auf der Seite analysiert, ist die Form mit dem höchsten Score die Form, die für den Login-Request benutzt wird. Eine Klassifizierung der Input-Felder, ob sie den Usernamen, Email oder Passwort übermitteln, wurde im vorherigen Schritt schon angelegt, da sich daraus der Form-Score berechnet. Zum Schluss werden noch alle zusätzlichen Input-Felder, die die Eigenschaft `visibility=hidden` haben, als Key-Value-Paar zusammen mit den Namen der Email-, Passwort- und Nutzername-Felder und deren Klassifizierung im JSON-Format gespeichert.
@@ -189,7 +190,7 @@ Sollte in dem Response-Header ein Feld `Location` existieren, bedeutet das, dass
 \subsection{Ermitteln der Größe der Forendatenbank}
 Die Ermittelung der Datenbankgröße wird bei dem späteren Treffen der Aussage über die Forenrelevanz für ein Produkt relevant.
 Es ist wichtig die annähernde Anzahl der Beiträge in dem Forum zu kennen, um bei einer Langzeitanalyse festzustellen, wie schnell das Forum wächst bzw. wie viele Einträge pro Tag hinzu kommen. Daraus kann ermittelt werden, mit welcher Wahrscheinlichkeit neue Beiträge zu einem Verkaufsprodukt mit welcher Frequenz eingestellt werden.
-Eine Übersicht zu dem Suchprozess kann im Anhang (Figure 22) gefunden werden.\\
+Eine Übersicht zu dem Suchprozess kann im Anhang (Abbildung 22) gefunden werden.\\
 \subsubsection{Ermitteln des Suchfeldes}
 Um die Datenbank analysieren zu können, muss zunächst das Suchfeld gefunden werden, das es in den meisten Foren gibt, um die vorhandenen Posts zu durchsuchen.
 Dazu wird das HTML nach dem erfolgreichen Einloggen auf weitere Form-Felder durchsucht. Die gefundenen Felder werden klassifiziert, indem sich die Namen-Attribute der Input-Felder dieser Form angeschaut werden. Sollte dieser Name aus einem `q` oder `search` bestehen, werden Punkte vergeben. Das `q` steht bei den meisten Webseiten für den Paramater query, welcher das Suchwort überträgt.
@@ -204,7 +205,7 @@ search & 24 \\ \hline
 suche & 5 \\ \hline
 andere & 18 \\ \hline
 \end{tabular}
-\caption{Verteilung derAttributnamen in Suchformen in 100 Foren}
+\caption{Verteilung der Attributnamen in Suchformen in 100 Foren}
 \end{table}
 
 Zum Schluss ist die Form mit dem höchsten Punktwert die Form, die am wahrscheinlichsten die Suchbar als Input-Feld enthält.
