@@ -4,7 +4,7 @@ Dies Kapitel dient dazu nachzuvollziehen, wie sich das Programm im Web verhalten
 \subsection{Implementierungsumgebung}
 Das Forum muss Zugriff auf eine Datenbankquelle haben. Diese besteht für die Dauer der Tests aus einem Teil der Noise to Opportunity Datenbank mit 50.000 Einträgen. Diese Einträge umfassen einen Beitragstitel, einen Beitragsinhalt und eine eindeutige Weburl, die als ID benutzt wird. Die Beiträge sind in einer NoSQL-Datenbank, Elasticsearch, gespeichert. Diese bietet den Vorteil, dass mit nur einer Anfrage an die Datenbank in Beitragstitel und Beitragsinhalt, leicht nach einem bestimmten Suchwort gesucht werden kann und die ersten 20 gefundenen Beiträge zurückgeliefert werden können.\\
 Das Forum wird lokal erstellt, um eine Vielzahl an Anfragen an ein im Internet verfügbares Forum zu vermeiden. Eine ordentliche Evaluierung könnte diesem Forum durch zu viel Netzwerkverkehr eventuell schaden.\\
-Geschrieben werden alle Programme, die die Thesen umsetzen, mit Hilfe von JavaScript. Das Forum wird auf einem node\.js-Server laufen. 
+Geschrieben werden alle Programme, die die Thesen umsetzen, mit Hilfe von JavaScript. Das Forum wird auf einem Node.js-Server laufen. 
 
 \subsubsection{Aufbau des Forums}
 Das Forum sollte einem originalen Internetforum möglichst nahe kommen, jedoch gleichzeitig eine Umgestaltung der einzelnen Seiten für Anmelden, Registrieren und Suchen nicht allzu aufwändig machen. Dieses erlaubt ein schnelles Debuggen, wenn sich das Programm nicht wie erwartet verhält. Deshalb wird sich beim Erstellen des Forums auf die wichtigsten Elemente konzentriert. Diese umfassen eine Login-, eine Registrierungs- und eine Suchseite.
@@ -32,7 +32,7 @@ Accept AGB:<input type="checkbox" name="AGB"></br>
 \end{figure}
 \newpage
 
-Aus Abbildung 1 ist es leicht zu evaluieren, ob der Registrierungsprozess erfolgreich sein würde. Zu erwaren wäre ein POST-Request an die Toplevel Domain + Formaction mit den POST-Parametern fname, email, re\_email, pwd, re\_pwd, AGB, sowie den hidden Key-Value-Pairs, val1=hiddenvalue1 und val2=hiddenvalue2.\\
+Aus Abbildung 1 ist es leicht zu evaluieren, ob der Registrierungsprozess erfolgreich sein würde. Zu erwaren wäre ein POST-Request an die Toplevel Domain + Formaction mit den POST-Parametern fname, email, re\_email, pwd, re\_pwd, AGB, sowie den hidden Key-Value-Pairs, val1 = hiddenvalue1 und val2 = hiddenvalue2.\\
 In die POST-Parameter sollten in die entsprechenden Felder, fname, email und pwd jeweils der Name, die Email und das Passwort eingetragen, sowie in den re\_email, re\_pwd jeweils die Email und das Passwort bestätigt sein, indem sie wiederholt eingegeben sind.\\
 Ist der HTTP-Server gestartet und wird die Registrierungsseite analysiert und der folgende Request an den Server gesendet :
 
@@ -81,7 +81,7 @@ jpm96353@adiaq.com
 \caption{Forum validiert den Nutzeraccount, da Validierungslink bestätigt wurde.}
 \end{figure}
 
-Sollte der Registrierungsprozess nicht funktionieren, kann die Registrierungsform nachgebaut, gegeben falls Änderungen an den Feldbewertungsmetriken vorgenommen werden um dann erneut ausprobieren, ohne Webforen zu belasten. Es gibt auch die Möglichkeit für das Programm, den Registrierungsschritt zu überspringen. Wenn der Nutzer schon einen Nutzeraccount per Hand angelegt hat, kann er das dem Programm über Eingabeparameter mitteilen. Anstatt sich neu zu registrieren, nutzt er nun den vorhandenen Nutzeraccount.
+Sollte der Registrierungsprozess nicht funktionieren, kann die Registrierungsform nachgebaut, gegeben falls Änderungen an den Feldbewertungsmetriken vorgenommen werden um dann erneut auszuprobieren, ohne Webforen zu belasten. Es gibt auch die Möglichkeit für das Programm, den Registrierungsschritt zu überspringen. Wenn der Nutzer schon einen Nutzeraccount per Hand angelegt hat, kann er das dem Programm über Eingabeparameter mitteilen. Anstatt sich neu zu registrieren, nutzt er nun den vorhandenen Nutzeraccount.
 
 \subsubsection{Forenlogin}
 Der Forenlogin sollte bei nicht angegebenen Logindaten mit den zuvor generierten Daten ausgeführt werden. Werden Accountdaten beim Programstart angegeben, sollten diese auch benutzt werden. Der Loginrequest sollte 3 Parameter enthalten, einmal den Nutzernamen und einmal das Passwort. Die Checkbox gibt an, ob man auf der Website eingeloggt bleiben möchte, um bei einem späteren Besuch nicht noch einmal die Nutzerdaten eingeben zu müssen. Das sind die gängigsten Login-Formulare, die im Internet existieren.
@@ -143,7 +143,7 @@ Auch etwaige versteckte Input-Felder werden korrekt gefunden und die Key-Value-P
 
 Alle nachgebauten Loginseiten diverser im Internet gefundener Seiten wurden im händischen Test erfolgreich ausgefüllt und die zu erwartende Loginanfrage an den Server gesendet.\\
 Es ist programmtechnisch möglich sich in Foren automatisch zu registrieren und anzumelden. Im Folgenden müssen nach dem Loginvorgang nun noch relevante Posts zu den jeweiligen Firmenprodukten aus dem Forum extrahiert werden.\\
-In Internetforen werden Nutzer, die sich gerade angemeldet haben, auf die Hauptseite des Forums verwiesen. Damit der Browser das realisiert, wird in der Antwort des Servers nach dem erfolgreichen Anmelden ein Statuscode 302 gesendet. Dieser zeigt an, dass der Browser eine andere URL ohne das Zutun des Nutzers laden soll. Die Url steht im Location-Header der Antwort. Dieses muss programmtechnisch realisiert werden, da sonst, ohne den Redirect, bei einer Analyse des HTML Quellcodes keine Suchform gefunden werden könnte, da immer die vorherige, also die Login-Seite analysiert werden würde.\\
+In Internetforen werden Nutzer, die sich gerade angemeldet haben, auf die Hauptseite des Forums verwiesen. Damit der Browser das realisiert, wird in der Antwort des Servers nach dem erfolgreichen Anmelden ein Statuscode 302 gesendet. Dieser zeigt an, dass der Browser eine andere URL ohne das Zutun des Nutzers laden soll. Die URL steht im Location-Header der Antwort. Dieses muss programmtechnisch realisiert werden, da sonst, ohne den Redirect, bei einer Analyse des HTML Quellcodes keine Suchform gefunden werden könnte, da immer die vorherige, also die Login-Seite analysiert werden würde.\\
 Der Server antwortet auf eine erfolgreiche Loginanfrage mit einem Redirect.
 
 \begin{figure}[ht]
@@ -187,7 +187,7 @@ Der Client erkennt automatisch, dass er auf eine andere Seite verwiesen wurde un
 \caption{Zu analysierendes HTML nach dem Redirect enthält die Suchform}
 \end{figure}
 
-Dieses HTML wird nach einer Suchform durchsucht. Diese befindet sich meist ein einer GET-Form. Da der Request ein GET-Request ist, wird das Suchwort in der Url codiert. Der Name des Key-Value-Paares, das für die Übermittlung zuständig ist, wird aus den Input-Feldern in der Form generiert. Dieses Attribut hat meist in den Namen `q` oder `search`. Der Client findet diese Suchform und sendet die Suchanfrage an den Server.
+Dieses HTML wird nach einer Suchform durchsucht. Diese befindet sich meist ein einer GET-Form. Da der Request ein GET-Request ist, wird das Suchwort in der URL codiert. Der Name des Key-Value-Paares, das für die Übermittlung zuständig ist, wird aus den Input-Feldern in der Form generiert. Dieses Attribut hat meist in den Namen `q` oder `search`. Der Client findet diese Suchform und sendet die Suchanfrage an den Server.
 
 
 \begin{figure}[ht]
@@ -210,7 +210,7 @@ Im Forum geht eine valide Suchanfrage ein.
 \caption{Eingehende Suchanfragen im Forum }
 \end{figure}
 
-Diese Suchwörter werden im Forum gesucht. Sollte das Suchwort im Titel oder im Beitragsinhalt vorkommen, wird der Link zu diesem Beitrag zurückgegeben. Dieser Link ist in dem Testforum eine eindeutige ID. Es ist anzunehmen, dass die Links eine eindeutige ID für jeden Post darstellen, da sie auf genau eine feste Internetadresse verweisen. So wie in einem Internetforum werden pro Suchwort die ersten 20 Treffer zu diesem Suchwort auf einer HTML zusammengefasst und an den Client ausgeliefert. Zu erwarten ist, dass der Client alle Links speichert und vermerkt, wie oft der Link bei unterschiedlichen Suchworten von dem Forum zurückgegeben wurde. Dazu wird das HTML nach allen vorkommenden Links durchsucht. Des weiteren sollten Links entfernt werden,die in mehr als der Hälfte der Suchanfragen zu finden sind, da es sich hierbei meist um statische Links handelt wie neuste Beiträge oder Links in den Navigationsleisten.
+Diese Suchwörter werden im Forum gesucht. Sollte das Suchwort im Titel oder im Beitragsinhalt vorkommen, wird der Link zu diesem Beitrag zurückgegeben. Dieser Link ist in dem Testforum eine eindeutige ID. Es ist anzunehmen, dass die Links in jedem Internetforum eine eindeutige ID für jeden Post darstellen, da sie auf genau eine feste Internetadresse verweisen. So wie in einem Internetforum werden pro Suchwort die ersten 20 Treffer zu diesem Suchwort auf einer HTML zusammengefasst und an den Client ausgeliefert. Zu erwarten ist, dass der Client alle Links speichert und vermerkt, wie oft der Link bei unterschiedlichen Suchworten von dem Forum zurückgegeben wurde. Dazu wird das HTML nach allen vorkommenden Links durchsucht. Des weiteren sollten Links entfernt werden, die in mehr als der Hälfte der Suchanfragen zu finden sind, da es sich hierbei meist um statische Links handelt wie neuste Beiträge oder Links in den Navigationsleisten.
 \newpage
 
 \begin{figure}[h!]

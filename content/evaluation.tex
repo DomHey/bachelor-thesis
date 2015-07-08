@@ -1,9 +1,9 @@
 \section{Evaluation}
 \subsection{Bestimmung der Forenrelevanz}
 
-Es geht darum zu evaluieren, ob eine Vorhersage darüber getroffen werden kann, wie groß eine Forendatenbank und wie relevant dieses Forum für ein jeweiliges Unternehmen ist.
+Es geht darum zu evaluieren, ob eine Vorhersage darüber getroffen werden kann, wie groß eine Forendatenbank und wie relevant dieses Forum für den Verkauf eines Unternehmensproduktes ist.
 
-Es wird zunächst die Datenbankgröße bestimmt wie in Kapitel [] beschrieben. Die Testdatenbank wurde in 3 Segemente geteilt. Segement 1 enthält nur Beiträge aus Forum 1, Segement 2 nur aus Forum 2 und Segement 3 nur Beiträge aus Forum 3. 
+Es wird zunächst die Datenbankgröße bestimmt. Die Testdatenbank wurde in 3 Segemente geteilt. Segement 1 enthält nur Beiträge aus Forum 1, Segement 2 nur aus Forum 2 und Segement 3 nur Beiträge aus Forum 3. 
 Segement 1 und 2 beinhalten englische Beiträge, wohingegen Segement 3 meist deutsche Beiträge enthält. Die Postanzahl aller 3 Segemente ist bekannt. Um eine realistische Einschätzung zu erhalten, wie zuverlässig die Vorhersage der Gesamtdatenbankgröße ist, wurde der Test für jedes Segement 3 mal wiederholt. Ein Testdurchlauf besteht aus 3 mal 500 zufälligen Wörtern, die an die Datenbank in der passenden Sprache gesendet werden. Die ermittelten Datenbankgrößen nach 500 Wörtern werden addiert, durch die Gesamtanzahl der Testläufe dividiert und danach mit der bekannten Gesamtanzahl der Posts in dem Datenbanksegment verglichen.
 
 \begin{table}[h!]
@@ -21,7 +21,7 @@ Fehler & +4\% & -5\% & -1\% \\ \hline
 
 Der Fehler beträgt maximal 5\% . Dieses bestätigten die zwei weiteren Testdurchläufe. Damit ist eine Voraussage einer Forendatenbank bis auf 10\% Differenz genau möglich.
 
-Im nächsten Schritt sollen die einzelnen Produkte im Forum gesucht werden. Dazu werden, wie in Kapitel[] beschrieben, beschreibende Wörter für jedes einzelne Produkt generiert. Diese Keywords werden gesucht und die Datenbankgröße aufgrund des Verhältnisses zwischen überlappenden und einzigartigen Dokumenten, wie in Kapitel[] beschrieben, berechnet. Die zu Testzwecken verwendete Datenbank enthält 21220 Beiträge.
+Im nächsten Schritt sollen die einzelnen Produkte im Forum gesucht werden. Dazu werden beschreibende Wörter für jedes einzelne Produkt generiert. Diese Keywords werden gesucht und die Datenbankgröße aufgrund des Verhältnisses zwischen überlappenden und einzigartigen Dokumenten, mit der Formel  \[\frac{u}{1-OR^{-1.1}}\] \cite{lu2008efficient}, berechnet. Die zu Testzwecken verwendete Datenbank enthält 21220 Beiträge.
 
 \begin{table}[h!]
 \centering 
@@ -34,7 +34,7 @@ ECOM & 3641 \\ \hline
 LVM & 1769 \\ \hline
 Gesamt & 10934 \\ \hline
 \end{tabular}
-\caption{Anzahl der Dokumente je Kategorie in der Testdatenbank. Der Rest der Beiträge konnte keinem Produkt eindeutig zugeordnet werden.}
+\caption{Anzahl der Dokumente je Kategorie in der Testdatenbank. Der Rest der Beiträge konnte keinem Produkt eindeutig zugeordnet werden}
 \end{table}
 
 \newpage
