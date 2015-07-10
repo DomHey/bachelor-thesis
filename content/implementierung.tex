@@ -30,7 +30,6 @@ Accept AGB:<input type="checkbox" name="AGB"></br>
 \end{lstlisting}
 \caption{HTML-Code für die Erstellung einer Registrierungsseite, mit Nutzernamen, Email und Passwordfeldern, sowie Checkbox}
 \end{figure}
-\newpage
 
 Aus Abbildung 1 ist es leicht zu evaluieren, ob der Registrierungsprozess erfolgreich sein würde. Zu erwaren wäre ein POST-Request an die Toplevel Domain + Formaction mit den POST-Parametern fname, email, re\_email, pwd, re\_pwd, AGB, sowie den hidden Key-Value-Pairs, val1 = hiddenvalue1 und val2 = hiddenvalue2.\\
 In die POST-Parameter sollten in die entsprechenden Felder, fname, email und pwd jeweils der Name, die Email und das Passwort eingetragen, sowie in den re\_email, re\_pwd jeweils die Email und das Passwort bestätigt sein, indem sie wiederholt eingegeben sind.\\
@@ -100,7 +99,7 @@ Eingeloggt bleiben:
 \end{lstlisting}
 \caption{HTML-Code, der die Loginseite des Forums erstellt}
 \end{figure}
-\newpage
+
 
 \begin{figure}[h!]
 \begin{lstlisting}[language=HTML5]
@@ -113,6 +112,7 @@ pwd:'AjZt198#ev'}
 \end{figure}
 
 In Abbildung 6 ist zu sehen, dass alle erforderlichen Daten korrekt ausgefüllt wurden.
+\newpage
 
 \begin{figure}[h!]
 \begin{lstlisting}[language=HTML5]
@@ -139,7 +139,6 @@ hiddenvalue: 'v1'}
 \end{figure}
 
 Auch etwaige versteckte Input-Felder werden korrekt gefunden und die Key-Value-Paare in dem POST-Request mit übergeben (Abbildung 8).
-\newpage
 
 Alle nachgebauten Loginseiten diverser im Internet gefundener Seiten wurden im händischen Test erfolgreich ausgefüllt und die zu erwartende Loginanfrage an den Server gesendet.\\
 Es ist programmtechnisch möglich sich in Foren automatisch zu registrieren und anzumelden. Im Folgenden müssen nach dem Loginvorgang nun noch relevante Posts zu den jeweiligen Firmenprodukten aus dem Forum extrahiert werden.\\
@@ -156,8 +155,6 @@ send 302 to redirect to /main
 \end{figure}
 
 Der Client überprüft bei jeder Anfrage an den Server, ob der Statuscode sich von 200 (OK) unterscheidet. Sollte es wie in diesem Fall ein 302 (Redirect) sein, wird automatisch die neue URL mit einem GET-Request nachgeladen, damit im nächsten Schritt das neue HTML analysiert werden kann. In diesem Fall wird die Main-Page des Forums als nächstes geladen.
-
-\newpage
 
 \subsubsection{Suchen im Forum}
 
@@ -197,7 +194,7 @@ Dieses HTML wird nach einer Suchform durchsucht. Diese befindet sich meist ein e
 \caption{Vom Client analysierte Suchform, gefundener Name des Suchparameters und die Suchurl}
 \end{figure}
 
-Im Forum geht eine valide Suchanfrage ein.
+\newpage
 
 
 \begin{figure}[ht]
@@ -209,8 +206,8 @@ Im Forum geht eine valide Suchanfrage ein.
 \end{lstlisting}
 \caption{Eingehende Suchanfragen im Forum }
 \end{figure}
-
-Diese Suchwörter werden im Forum gesucht. Sollte das Suchwort im Titel oder im Beitragsinhalt vorkommen, wird der Link zu diesem Beitrag zurückgegeben. Dieser Link ist in dem Testforum eine eindeutige ID. Es ist anzunehmen, dass die Links in jedem Internetforum eine eindeutige ID für jeden Post darstellen, da sie auf genau eine feste Internetadresse verweisen. So wie in einem Internetforum werden pro Suchwort die ersten 20 Treffer zu diesem Suchwort auf einer HTML zusammengefasst und an den Client ausgeliefert. Zu erwarten ist, dass der Client alle Links speichert und vermerkt, wie oft der Link bei unterschiedlichen Suchworten von dem Forum zurückgegeben wurde. Dazu wird das HTML nach allen vorkommenden Links durchsucht. Des weiteren sollten Links entfernt werden, die in mehr als der Hälfte der Suchanfragen zu finden sind, da es sich hierbei meist um statische Links handelt wie neuste Beiträge oder Links in den Navigationsleisten.
+Im Forum geht eine valide Suchanfrage ein (Abbildung 13).
+Sollte das Suchwort im Titel oder im Beitragsinhalt vorkommen, wird der Link zu diesem Beitrag zurückgegeben. Dieser Link ist in dem Testforum eine eindeutige ID. Es ist anzunehmen, dass die Links in jedem Internetforum eine eindeutige ID für jeden Post darstellen, da sie auf genau eine feste Internetadresse verweisen. So wie in einem Internetforum werden pro Suchwort die ersten 20 Treffer zu diesem Suchwort auf einer HTML zusammengefasst und an den Client ausgeliefert. Zu erwarten ist, dass der Client alle Links speichert und vermerkt, wie oft der Link bei unterschiedlichen Suchworten von dem Forum zurückgegeben wurde. Dazu wird das HTML nach allen vorkommenden Links durchsucht. Des weiteren sollten Links entfernt werden, die in mehr als der Hälfte der Suchanfragen zu finden sind, da es sich hierbei meist um statische Links handelt wie neuste Beiträge oder Links in den Navigationsleisten.
 \newpage
 
 \begin{figure}[h!]

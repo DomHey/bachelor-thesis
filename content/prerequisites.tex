@@ -1,6 +1,6 @@
 \section{Voraussetzungen}
 Um eine Aussage darüber treffen zu können, wie relevant ein Forum für ein Unternehmen ist, muss dieses Forum durchsuchbar gemacht werden.
-Vorraussetzung für ein programmatisches durchsuchen eines Forums ist ein erfolgreicher Login in dem Forum, entweder mit einem vorhandenen Nutzeraccount oder durch eine automatische Registrierung und dann einem Login mit den gerade erstellten Daten.
+Vorraussetzung für ein programmatisches Durchsuchen eines Forums ist ein erfolgreicher Login in dem Forum, entweder mit einem vorhandenen Nutzeraccount oder durch eine automatische Registrierung gefolgt von  einem Login mit den gerade erstellten Daten.
 Der Login in das Forum ist nötig um den geschützten Inhalt des Forums für das Programm sichtbar zu machen. Deshalb wird in diesem Kapitel die Theorie für ein erfolgreiches Registrieren, Einloggen und Durchsuchen eines Forums beschrieben.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -8,17 +8,17 @@ Der Login in das Forum ist nötig um den geschützten Inhalt des Forums für das
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection {Automatisches Registrieren in Foren}
 Um an den Inhalt eines Forums zu gelangen muss in den meisten Fällen zunächst ein Nutzerprofil in dem jeweiligen Forum angelegt werden. Anschließend kann sich mit dem Profil eingeloggt und der geschützte Inhalt des Forums als Nutzer eingesehen werden. \\
-Im Folgenden werden die Schritte erläutert, die ein automatisiertes Registrieren auf Webseiten zu ermöglichen versucht.
+Im Folgenden werden die Schritte erläutert, die ein automatisiertes Registrieren auf Webseiten ermöglichen.
 Eine Übersicht zu dem Registrierungsprozess ist im Anhang (Abbildung 20) zu sehen.
 
 \subsubsection{Ermittlung der relevanten Formulare in HTML-Webseiten}
-Auf der entsprechenden Registrierungsseite des jeweiligen Forums wird eine Analyse auf dem HTML-Quellcode der Seite durchlaufen.
-Diese sucht sich aus der Webseite jeden Form-Tag heraus. Es wird ein Wert berechnet, mit welcher Wahrscheinlichkeit das gerade gefundene Form-Element das Element ist, das die Input-Elemente für den späteren Registrierungsaufruf enthält. \\
-Es werden Punkte vergeben, wenn in den Attributen des Form-Elements sich bestimmte Schlagworte wie `Signup`, `User`, `Register` etc. wiederfinden.
+Auf der entsprechenden Registrierungsseite des jeweiligen Forums wird eine Analysedes HTML-Quellcodes der Seite durchgeführt.
+Für jedes gefundene Form-Element wird berechnet, mit welcher Wahrscheinlichkeit es die Input-Elemente für den späteren Registrierungsaufruf enthält. \\
+Es werden Punkte vergeben, wenn sich in den Attributen des Form-Elements bestimmte Schlagworte wie `Signup`, `User`, `Register` etc. wiederfinden.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%% STATISTIK %%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-Diese Wörter wurden durch eine Analyse der Registrierungsseiten von 100, zufällig aus dem Internet gewählten Foren, generiert worden. Dazu wurde auf jeder Seite die Registrierungsform durchsucht und der Wert des `name` Attributs gespeichert. Aus 100 Webseiten ergibt sich die folgende Verteilung:
+Diese Wörter wurden durch eine Analyse der Registrierungsseiten von 100 zufällig aus dem Internet gewählten Foren generiert . Dazu wurde auf jeder Seite das Registrierungsformular durchsucht und der Wert des `name` Attributs gespeichert. Aus 100 Webseiten ergibt sich die folgende Verteilung:
 
 \begin{table}[h!]
 \centering 
@@ -38,7 +38,7 @@ u & 1 \\ \hline
 
 
 
-Außerdem muss es sich bei dem Formular um ein POST-Formular handeln, da es bei Absenden des Registrierungsversuches die eingegebenen Informationen wie Nutzername, Passwort und Email im POST-Body mit übermitteln muss.
+Außerdem handelt es sich bei dem Registrierungsformular mit hoher Wahrscheinlichkeit um ein POST-Formular, da es bei Absenden des Registrierungsversuches die eingegebenen Informationen wie Nutzername, Passwort und Email im POST-Body übermitteln muss.
 Deshalb kann man sich bei den Webseiten darauf verlassen, dass, wenn Eingabefelder für das Registrieren vorhanden sind, diese sich in einem solchen POST-Formular befinden.
 
 \begin{table}[h!]
@@ -55,7 +55,7 @@ keine Registrierung & 4 \\ \hline
 
 Ist das Registrierungsformular gefunden, werden die darin vorhandenen Input-Felder analysiert und danach gewichtet, welches Feld für Nutzernamen, Passwort und Emailadresse am wahrscheinlichsten ist.
 Diese Klassifizierung erfolgt ähnlich wie bei den POST-Formularen der HTML-Webseiten anhand bestimmter Schlagworte.
-So sind Input-Felder, die in ihren Attributen Wörter wie `Login`, `Username` oder `User` enthalten, wahrscheinlich die Felder, in den der Nutzername eingetragen werden soll. Demnach wird für jedes Vorkommen eines dieser Wörter dem Username-Score ein fester Wert aufaddiert. Sollten hingegen in den Attributen Wörter wie `Password` oder `Email` vorkommen, wird dem Passwort- oder Emailscore des gerade betrachteten Inputfeldes ein Wert hinzuaddiert.
+So sind Input-Felder, die in ihren Attributen Wörter wie `Login`, `Username` oder `User` enthalten, wahrscheinlich die Felder, in den der Nutzername eingetragen werden soll. Demnach wird für jedes Vorkommen eines dieser Wörter der Nutzernamen Wahrscheinlichkeit ein fester Wert aufaddiert. Je höher diese Wahrscheinlichkeit am Ende der Analyse ist, desto wahrscheinlicher handelt es sich bei diesem Input-Feld um das Feld, in das der Nutzername eingetragen werden soll. Sollten hingegen in den Attributen Wörter wie `Password` oder `Email` vorkommen, wird der Passwort- oder Emailwahrscheinlichkeit des gerade betrachteten Input-Feldes ein Wert hinzuaddiert.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%% STATISTIK %%%%%%%%%%%%%%%%%%%%%
@@ -65,7 +65,7 @@ So sind Input-Felder, die in ihren Attributen Wörter wie `Login`, `Username` od
 \centering 
 \begin{tabular}{ | p{7cm} | p{3cm}|} \hline
 Name des Nutzernamenparameters & Anzahl \\ \hline
-username & 43 \\ \hline
+username & 42 \\ \hline
 name & 21 \\ \hline
 login & 17 \\ \hline
 userlogin & 14 \\ \hline
@@ -74,7 +74,8 @@ fullname & 2 \\ \hline
 \caption{Verteilung der Nutzernamenparameternamen in 100 Foren}
 \end{table}
 
-10 Webseiten verlangten keine Angabe eines Nutzernamens, sondern nur die Angabe einer Emai und eines Passwortes.
+Tabelle 3 zeigt, dass 4 Webseiten keine Registrierung erforderten.
+10 Webseiten verlangten keine Angabe eines Nutzernamens, sondern nur die Angabe einer Email und eines Passworts. Der Name des Emailparameters ist in der Verteilung aus Tabelle mit enthalten.
 
 \begin{table}[h!]
 \centering 
@@ -102,11 +103,11 @@ useremail & 2 \\ \hline
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-Zum Schluss wird die Klassifizierung des Inputfeldes anhand des höchsten Wertes von Email -, Passwort- und Nutzernamen-Wert vorgenommen. \\
-Sind alle Input-Felder klassifiziert, werden die Checkboxen, sofern sich welche in dem Formular befinden, analysiert. Diese sind dazu da, um die Foren-AGB zu akzeptieren, angemeldet zu bleiben oder den Newsletter des jeweiligen Forums zu akzeptieren.
+Zum Schluss wird die Klassifizierung des Inputfeldes anhand der höchsten Wahrscheinlichkeit von Email -, Passwort- und Nutzernamen-Wahrscheinlichkeit vorgenommen. \\
+Sind alle Input-Felder klassifiziert, werden die Checkboxen, sofern sich welche in dem Formular befinden, analysiert. Diese sind dazu da die Foren-AGBs zu akzeptieren, angemeldet zu bleiben oder den Newsletter des jeweiligen Forums zu akzeptieren.
 Es werden alle Checkboxen angehakt. Der Newsletter, sofern die Checkbox vorhanden sein sollte, ist nicht störend, da eine neue Spam-Email-Adresse für jedes neue Registrieren in einem Forum benutzt wird.\\
 Zum Schluss werden alle Inputfelder bearbeitet die `versteckt` sind, also das Attribut `hidden`, im HTML-Quellcode enthalten.
-Diese Felder sind nicht dazu da, damit der Nutzer dort Informationen einträgt, sonder lediglich, um bei der Registrierungsanfrage zusätzliche Daten mitzusenden. Daher werden die Key-Value-Paare des Input-Feldes zusammen mit den vorher gesammelten Daten zum Absenden der Registrierungsanfrage übergeben.
+Diese Felder sind nicht dazu da, damit der Nutzer dort Informationen einträgt, sondern lediglich, um bei der Registrierungsanfrage zusätzliche Daten mitzusenden. Daher werden die Key-Value-Paare der versteckten Input-Felder zusammen mit den Email-, Passwort- und Nutzernamendaten der Registrierungsanfrage übergeben.
 
 \subsubsection{Absenden der Registrierungsanfrage}
 Mit dem vorherigen Schritt sind alle relevanten Daten für den Registrierungsprozess erfasst worden. Nun wird ein zufälliger Nutzername generiert. Dazu wird der externe Service randomuser.me\footnote{http://api.randomuser.me/} benutzt. Ein Aufruf dieser API liefert JSON Information zu einem generierten Nutzer zurück, samt Nutzername. Dieser wird an die Stellen des POST-Formulars als Value des Keys eingetragen, der den Nutzernamen verlangt.\\
@@ -117,8 +118,8 @@ Die URL, an die der Registrierungsversuch gesendet wird, setzt sich aus der Top-
 
 \subsubsection{Bestätigen des Registrierungslinks in der Registrierungs-Email}
 Nachdem die Registrierungsaufforderung im Forum eingeht, wird eine Bestätigungsmail an die Email-Adresse gesendet.
-Um diese Email nun abrufen zu können, wird alle 5 Sekunden die Email-Webseite neu geladen, damit eine etwaige neue Email angezeigt wird. Da die Seite keinen Login erfordert, wird die Zuordnung zwischen Nutzer und zugehörigen Emails über Cookies gelöst. Diese Cookies werden beim ersten Besuchen der Webseite, wenn die Email erstellt wird, im Response-Header an den Nutzer mit übergeben. Wenn bei dem programmatischen Neuladen der Webseite diese Cookies mitgesendet werden, können Emails, die an die Adresse gesendet wurden, abgerufen werden. Bei fehlen der Cookies würde immer eine neue Emailadresse angelegt werden.\\
-Wird nun die Email des Forums in dem Posteingang gefunden, werden alle Hyperlinks aus dem Email-Inhalt extrahiert und einmal mit einem GET-Request aufgerufen. Dieses sichert, dass das angelegte Nutzerprofil in dem Forum aktiviert, validiert und zum einloggen freigeschaltet wird.
+Um diese Email nun abrufen zu können, wird alle 5 Sekunden die 10minute.net Email-Webseite neu geladen, damit eine etwaige neue Email angezeigt wird. Da die Seite keinen Login erfordert, wird die Zuordnung zwischen Nutzer und zugehörigen Emails über Cookies gelöst. Diese Cookies werden beim ersten Besuchen der Webseite, wenn die Email erstellt wird, im Response-Header an den Nutzer mit übergeben. Wenn bei dem programmatischen Neuladen der Webseite diese Cookies mitgesendet werden, können Emails, die an die Adresse gesendet wurden, abgerufen werden. Bei Fehlen der Cookies würde immer eine neue Emailadresse angelegt werden.\\
+Wird nun die Email des Forums in dem Posteingang gefunden, werden alle Hyperlinks aus dem Email-Inhalt extrahiert und einmal mit einem GET-Request aufgerufen. Dieses sichert, dass das angelegte Nutzerprofil in dem Forum aktiviert, validiert und zum Einloggen freigeschaltet wird.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%% LOGIN %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -135,7 +136,7 @@ Enthalten diese in ihren Attributen differenzierte Schlagworte wie `login`, `use
 
 
 Weiterhin werden die Input-Typen der Input-Formen analysiert. Bestehen sie aus den Kombinationen Input-Typ = 'text' und Input-Name = Einer Kombination aus den Worten `login`, `username` oder `email`, werden weitere Punkte zu dem Score hinzugerechnet.
-\[Inputtype = `text` \wedge Inputname = [`login` \vee `username` \vee `email`]^*\]
+\[Inputtype = `text` \wedge Inputname = [`login` \vee `username` \vee `email`]^*\] (Tabelle 6)
 
 \begin{table}[h!]
 \centering 
@@ -153,7 +154,7 @@ andere & 5 \\ \hline
 
 
 Selbiges gilt für eine Kombination aus Input-Typ = `password` und Input-Namen = `password`.
-\[Inputtype = `password` \wedge Inputname = `password`\]
+\[Inputtype = `password` \wedge Inputname = `password`\] (Tabelle 7)
 \newpage
 \begin{table}[h!]
 \centering 
@@ -167,20 +168,20 @@ andere & 5 \\ \hline
 \caption{Verteilung der Attributnamen in Loginformen in 100 Foren, mit Input-Typ = `password`}
 \end{table}
 
-4 der Foren, die, die auch keine Registrierung erforderten, erforderten auch kein Login. Bei den fehlenden 3 Foren hatte das Passwort den Input-Typ `text`.
+Vier der Foren, die, die auch keine Registrierung erforderten, benötigen auch keinen Login. Bei den fehlenden 3 Foren hatte das Passwort den Input-Typ `text`.
 Sollte die Form genau ein Input-Feld mit dem Type = `password`, ein Input-Feld mit dem Type = `text ` und eine Checkbox haben, ist diese Form am wahrscheinlichsten die Login-Form. Sie bestünde aus einem Feld für den Usernamen oder Email, einem Passwortfeld und einer Checkbox, ob ein Angemeldetbleiben erwünscht ist. Aus den 100 getesteten Webseiten bestanden 66 \% der Loginseiten aus diesem Schema.
 
-Sind alle Formen auf der Seite analysiert, ist die Form mit dem höchsten Score die Form, die für den Login-Request benutzt wird. Eine Klassifizierung der Input-Felder, ob sie den Usernamen, Email oder Passwort übermitteln, wurde im vorherigen Schritt schon angelegt, da sich daraus der Form-Score berechnet. Zum Schluss werden noch alle zusätzlichen Input-Felder, die die Eigenschaft `visibility=hidden` haben, als Key-Value-Paar zusammen mit den Namen der Email-, Passwort- und Nutzername-Felder und deren Klassifizierung im JSON-Format gespeichert.
+Sind alle Formen auf der Seite analysiert, wird die Form mit der höchsten Wahrscheinlichkeit für den Login-Request benutzt wird. Eine Klassifizierung der Input-Felder, ob sie den Usernamen, Email oder Passwort übermitteln, wurde im vorherigen Schritt schon angelegt, da sich daraus der Form-Score berechnet. Zum Schluss werden noch alle zusätzlichen Input-Felder, die die Eigenschaft `visibility=hidden` haben, als Key-Value-Paar zusammen mit den Namen der Email-, Passwort- und Nutzername-Felder und deren Klassifizierung im JSON-Format gespeichert.
 
 \subsubsection{Absenden des Loginrequests}
 Der Request, der an den Server abgesendet wird, ist ein POST-Request, da er die Formulardaten mit an den Server übermitteln muss.
-An die Value-Stelle der klassifizierten Input-Namen werden nun Daten, wie Password, Email und Nutzername eingetragen und an den Server gesendet.
-Sollte dieser Request scheitern, werden die restlichen Formen, die sich aus dem HTML-Quellcode extrahieren ließen, als mögliche Login-Formen klassifiziert ausprobiert.
+An die Value-Stelle der klassifizierten Input-Namen werden nun Daten wie Password, Email und Nutzername eingetragen und an den Server gesendet.
+Sollte dieser Request scheitern, werden die restlichen Formen, die sich aus dem HTML-Quellcode extrahieren ließen, als mögliche Login-Formen ausprobiert.
 
 \subsubsection{Handhabung von Cookies und Redirects}
-Sollte in dem Response-Header des Servers bei einer Loginanfrage ein Statuscode 200 gesendet werden, war der Loginversuch erfolgreich. Da das HTTP-Protokoll keine Zustände speichern kann, muss dem Server bei jeder neuen Anfrage mitgeteilt werden, dass die Anfrage nach einem erfolgreichen Loginversuch unternommen wurde. Andernfalls würde der Server den Zugriff auf die Daten, die nach einem erfolgreichen Login erreicht werden könnten, sperren.\\
+Sollte in dem Response-Header des Servers bei einer Loginanfrage ein Statuscode 200 gesendet werden, war der Loginversuch erfolgreich. Da das HTTP-Protokoll keine Zustände speichern kann, muss dem Server bei jeder neuen Anfrage mitgeteilt werden, dass die Anfrage nach einem erfolgreichen Loginversuch unternommen wurde. Andernfalls würde der Server den Zugriff auf die Daten, die nach einem erfolgreichen Login erreicht werden können, sperren.\\
 Um dieses zu gewährleisten, werden die Cookies aus dem Response-Header der erfolgreichen Loginanfrage gespeichert und bei jeder neuen Anfrage an den Server mitgesendet.\\
-Sollte in dem Response-Header ein Feld `Location` existieren, bedeutet das, dass es einen Redirect nach dem Login geben würde, bei dem der Browser eine andere URL laden würde. Dieser Redirect ist für den nachfolgenden Schritt, das Suchen der Suchbar in Foren wichtig. Die Suchbar wird oft auf der Startseite des Forums angezeigt und der Redirect führt genau dort hin. Deshalb wird die URL, die sich in dem Location-Header befindet, durch einen GET-Request geladen und für die weitere Verarbeitung genutzt. Dieses stellt sicher, dass sich eine Such-Form in dem zu analysierenden HTML-Quellcode befindet.
+Sollte in dem Response-Header ein Feld `Location` existieren, bedeutet das, dass es einen Redirect nach dem Login gibt, bei dem der Browser eine andere URL lädt. Dieser Redirect ist für den nachfolgenden Schritt, das Suchen des Suchformulares in Foren wichtig. Das Suchformular befindet sich bei 100 getesteten Foren bei 93 \% auf der Hauptseite des Forums. Ein Redirect führt in den meisten Fällen zu genau dieser Hauptseite des Forums. Deshalb wird die URL, die sich in dem Location-Header befindet, durch einen GET-Request geladen und für die weitere Verarbeitung genutzt. Das stellt sicher, dass sich ein Such-Formular in dem zu analysierenden HTML-Quellcode befindet.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%% SUCHEN %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -188,11 +189,11 @@ Sollte in dem Response-Header ein Feld `Location` existieren, bedeutet das, dass
 
 \subsection{Ermitteln der Größe der Forendatenbank}
 Die Ermittelung der Datenbankgröße wird bei dem späteren Treffen der Aussage über die Forenrelevanz für ein Produkt relevant.
-Es ist wichtig die annähernde Anzahl der Beiträge in dem Forum zu kennen, um eine Aussage darüber zu Treffen, wie das Verhältnis zwischen Datenbankgröße und produktspezifischen Posts ist. Ist dieses Verhältnis zu klein, lohnt es sich nicht dieses Forum zu durchsuchen, da die Zeit einen Porduktpost zu finden, der dazu noch einen Kaufwillen ausdrückt, zu lang ist und sich das Suchen nicht rentieren würde.
+Es ist wichtig die annähernde Anzahl der Beiträge in dem Forum zu kennen, um eine Aussage darüber zu treffen, wie das Verhältnis zwischen Datenbankgröße und produktspezifischen Beitrag ist. Ist dieses Verhältnis zu klein, lohnt es sich nicht dieses Forum zu durchsuchen, da die Zeit einen Produktpost zu finden, der dazu noch einen Kaufwillen ausdrückt, zu lang ist und sich das Suchen nicht rentieren würde.
 Eine Übersicht zu dem Suchprozess kann im Anhang (Abbildung 22) gefunden werden.
 \subsubsection{Ermitteln des Suchfeldes}
-Um die Datenbank analysieren zu können, muss zunächst das Suchfeld gefunden werden, das es in den meisten Foren gibt, um die vorhandenen Posts zu durchsuchen.
-Dazu wird das HTML nach dem erfolgreichen Einloggen auf weitere Form-Felder durchsucht. Die gefundenen Felder werden klassifiziert, indem sich die Namen-Attribute der Input-Felder dieser Form angeschaut werden. Sollte dieser Name aus einem `q` oder `search` bestehen, werden Punkte vergeben. Das `q` steht bei den meisten Webseiten für den Paramater query, welcher das Suchwort überträgt.
+Um die Datenbank analysieren zu können, muss zunächst das Suchfeld gefunden werden, das es in den meisten Foren gibt, um die vorhandenen Beiträge zu durchsuchen.
+Dazu wird das HTML nach dem erfolgreichen Einloggen auf weitere Form-Felder durchsucht. Die gefundenen Felder werden klassifiziert, indem sich die Namen-Attribute der Input-Felder dieser Form angeschaut werden. Sollte dieser Name aus einem `q` oder `search` bestehen (Tabelle 8), werden Punkte vergeben. Das `q` steht bei den meisten Webseiten für den Paramater query, welcher das Suchwort überträgt.
 Danach werden alle Attribute der Input-Felder der Form durchsucht. Sollten in den Attributen die Zeichenketten `search` oder `suche` vorkommen werden weitere Punkte vergeben.
 
 \begin{table}[h!]
@@ -208,17 +209,17 @@ andere & 18 \\ \hline
 \end{table}
 
 Zum Schluss ist die Form mit dem höchsten Punktwert die Form, die am wahrscheinlichsten die Suchbar als Input-Feld enthält.
-Nun wird der Pfad der Suche aus der Form extrahiert, indem das `action`-Attribut der Form ausgelesen wird. Dieser Wert wird an die Toplevel Domain angefügt und stellt die Suchurl dar. Der Queryparameter wird aus dem Namen-Attribut des Input-Feldes extrahiert und an die Suchurl angehangen. Sollte zum Beispiel das Namen-Attribut des Input-Feldes ein `q` sein, würde sich die vorläufige Suchurl so zusammensetzen:
+Nun wird der Pfad der Suchanfrage aus der Form extrahiert, indem das `action`-Attribut der Form ausgelesen wird. Dieser Wert wird an die Toplevel Domain angefügt und stellt die Such-URL dar. Der Queryparameter wird aus dem Namen-Attribut des Input-Feldes extrahiert und an die Suchurl angehängt. Sollte zum Beispiel das Namen-Attribut des Input-Feldes ein `q` sein, würde sich die vorläufige Such-URL folgendermaßen zusammensetzen:
 
 \[ URL := `Domainname` + action + ?q= \]
 
-An den Queryparameter q werden im folgenden die einzelnen Suchworte, die zur Ermittelung der Datenbankgröße beitragen, angehängt und an das Forum.\\
-Diese Wörter, die die Datenbank bestimmen sollen, werden aus einer Datei gelesen, die die am häufigsten benutzen Wörter in einer Sprache sortiert auflistet. Aus diesen Wörtern werden zufällig 500 Wörter gezogen ,in die Url eingefügt und abgesendet.
+An den Queryparameter q werden im folgenden die einzelnen Suchworte, die zur Ermittelung der Datenbankgröße beitragen, angehängt und an das Forum gesendet.\\
+Die Wörter, die die Datenbank bestimmen sollen, werden aus einer Datei gelesen, die die am häufigsten benutzen Wörter in einer Sprache sortiert auflistet. Aus diesen Wörtern werden zufällig 500 Wörter gezogen ,in die URL eingefügt und abgesendet.
 
 \subsubsection{Berechnung der Datenbankgröße}
-Nach jedem abgesendeten Request wird der zurückgegebene Inhalt analysiert. Dieser enthält die Beiträge, die von der 
+Nach jedem abgesendeten Anfrage wird der zurückgegebene Inhalt analysiert. Dieser enthält die Beiträge, die von der 
 forumseigenen Suchmaschine zurückgegeben werden, wenn man nach einem spezifischen Wort sucht. In dem Inhalt werden alle Hyperlinks gesucht und gespeichert. Diese Prozedur wird 500 mal wiederholt. Zum Schluss werden die Gesamtzahl an gewonnenden Links berechnet sowie die Anzahl der Links, die bei unterschiedlichen Suchwörtern identisch sind. Links, die in mehr als 50\% der Gesamtanfragen vorkommen, werden ignoriert, da es sich hierbei meist um statische Links handelt, die sich auf der Suchseite befinden handeln. Diese Links zeigen dann nicht auf Beiträge die aus der Suchanfrage generiert werden, sondern auf statische Elemente der HTML-Webseite wie Navigationsbar oder ähnliches. Diese würden dann die Berechnung der Datenbankgröße verfälschen und werden deshalb ignoriert.
-Die finale Größe der Datenbank lässt sich mit Hilfe der Formel \[\frac{u}{1-OR^{-1.1}}\] \cite{lu2008efficient} berechnen. Hierbei ist \textit{u} die Anzahl der einzigartigen Dokumente und \textit{OR} das Verhältnis von allen Dokumenten zu doppelten. Das Verhältnis von einzigartigen zu doppelten Dokumenten bestimmt die Datenbankgröße.\\
+Die finale Größe der Datenbank lässt sich mit Hilfe der Formel \[|DB|_{gesamt} = \frac{u}{1-OR^{-1.1}}\] berechnen. Hierbei ist \textit{u} die Anzahl der einzigartigen Dokumente und \textit{OR} das Verhältnis von allen Dokumenten zu doppelten Dokumenten. Das Verhältnis von einzigartigen zu doppelten Dokumenten bestimmt die Datenbankgröße\cite{lu2008efficient}.\\
 Dieser ganze Vorgang wird drei mal wiederholt und aus den drei resultierenden Datenbankgrößen das arithmetische Mittel gebildet. Diese Zahl bestimmt, wie viele Posts sich insgesamt in der Forendatenbank befinden.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -227,17 +228,17 @@ Dieser ganze Vorgang wird drei mal wiederholt und aus den drei resultierenden Da
 
 
 \subsection{Forenrelevanz}
-Um eine gezielte Aussage darüber treffen zu können, ob das gerade analysierte Forum überhaupt relevant für die Verkaufsstrategie eines Unternehmens ist, müssen neben der Gesamtgröße des Forums auch die Anzahl und Qualität der Beiträge für Verkaufsprodukte analysiert werden. Das Verhältnis zwischen Gesamtforengröße, Beitragsanzahl zu jedem einzelnen Unternehmensprodukt und die Qualität der Beiträge, gemessen an dem ausgedrückten Verlangen, etwas zu kaufen, geben Aufschluss darüber, ob das Forum für eine Firma als wichtig erachtet werden kann.
+Um eine gezielte Aussage darüber treffen zu können, ob das gerade analysierte Forum überhaupt relevant für die Verkaufsstrategie eines Unternehmens ist, müssen neben der Gesamtgröße des Forums auch die Anzahl und Qualität der Beiträge für Verkaufsprodukte analysiert werden. Das Verhältnis zwischen Gesamtforengröße, Beitragsanzahl zu jedem einzelnen Unternehmensprodukt und die Qualität der Beiträge, gemessen an dem ausgedrückten Bedürfnis etwas zu kaufen, geben Aufschluss darüber, ob das Forum für eine Firma als wichtig erachtet werden kann.
 
 \subsubsection{Generierung der Produktschlagworte}
-Die Ermittelung der Gesamtanzahl der Beträge, die zu einem Firmenprodukt zugeordnet werden, werden in der gleichen Art und Weise bestimmt wie die Gesamtgröße der Forendatenbank.\\
-Zu diesem Zweck werden Dokumente der Firmen analysiert, die eindeutig ein Produkt beschreiben. Dieses können Broschüren, Webseiten oder PDF-Dateien sein. Diese Dateien können von der jeweiligen Firma hochgeladen werden. Aus diesen Texten werden die häufigsten Wörter nach Tf-idf-Maß extrahiert. Aus der generierten Wortliste werden die häufigsten Wörter, in der jeweilig genutzten Sprache, entfernt. Diese entfernten Wörter sind Füllwörter, die, wenn sie gesucht werden, beliebige Posts als Suchergebnis liefern würden, deren Inhalt nichts mit dem eigentlich gesuchten Produkt gemein haben.\\
-Ist die Wortliste generiert werden diese Worte in der Suchmaske des Forums gesucht und wiederum die Links in der Antwort gespeichert und gezählt. Hinzu kommt, das jeder gefundene Link zu einem Beitrag durch einen weiteren GET-Request an diese Seite aufgerufen und heruntergeladen wird. Diese heruntergeladene Seite gibt den selben Zustand wieder, als ob ein Mensch mit dem Browser sich eingeloggt und diesen Beitrag aufgerufen hätte. Aus dem Dokument werden alle HTML-Tags entfernt. Im Anschluss wird der Beitragsinhalt extrahiert und an einen Service geschickt, der den Inhalt genauer analysiert. Der Inhalt ist der erste zusammenhängende Text, der 40 oder mehr Zeichen enthält \footnote{http://blog.viermalvier.at/die-richtige-laenge-von-social-media-postings-mit-infografik/ checked: 25.06.2015}, da dieses die optimale Anzahl an Buchstaben in einem Social- Media-Beitrag darstellt.
+Die Ermittelung der Gesamtanzahl der Beiträge, die zu einem Firmenprodukt zugeordnet werden, werden in der gleichen Art und Weise bestimmt wie die Gesamtgröße der Forendatenbank.\\
+Zu diesem Zweck werden Dokumente der Firmen analysiert, die eindeutig ein Produkt beschreiben. Das können Broschüren, Webseiten oder PDF-Dateien sein. Diese Dateien können von der jeweiligen Firma hochgeladen werden. Aus diesen Texten werden die häufigsten Wörter nach Tf-idf-Maß extrahiert. In der generierten Wortliste werden die häufigsten Wörter, in der jeweilig genutzten Sprache, entfernt. Diese entfernten Wörter sind Füllwörter, die, wenn sie gesucht werden, beliebige Posts als Suchergebnis liefern würden, deren Inhalt nichts mit dem eigentlich gesuchten Produkt gemein haben.\\
+Ist die Wortliste generiert werden diese Worte in der Suchmaske des Forums gesucht und wiederum die Links in der Antwort gespeichert und gezählt. Hinzu kommt, dass jeder gefundene Link zu einem Beitrag durch einen weiteren GET-Request an diese Seite aufgerufen und heruntergeladen wird. Die heruntergeladene Seite gibt den selben Zustand wieder, als ob ein Mensch mit dem Browser sich eingeloggt und diesen Beitrag aufgerufen hätte. Aus dem Dokument werden alle HTML-Tags entfernt. Der Inhalt ist der erste zusammenhängende Text, der 40 oder mehr Zeichen enthält \footnote{http://blog.viermalvier.at/die-richtige-laenge-von-social-media-postings-mit-infografik/ checked: 25.06.2015}, da dieses die optimale Anzahl an Buchstaben in einem Social- Media-Beitrag darstellt.
 
 \subsubsection{Analyse der Forenbeiträge}
-Dieser Service bewertet den Inhalt auf Grund der zuvor hoch geladenen Firmenbroschüren. Diese Broschüren beschreiben genau ein Produkt detaillierter. Die Gesamtheit aller Broschüren, die ein Produkt klassifizieren, bilden Produktcluster. Jeder Eintrag verweist mit einem Distanzvektor auf die nächsten ihm ähnlichen Broschüreneinträge. Soll nun ein gerade gewonnener Beitragsinhalt klassifiziert werden, werden die ihm ähnlichsten Broschüreneinträge berechnet. Über den K-Nearest-Neighbour wird nun bestimmt, zu welchem Produkt der Text des Beitrags am ähnlichsten ist. Ist der Beitrag einem bestimmten Produkt zugeordnet, wird der in dem Beitrag zum Ausdruck gebrachte Kaufbedarf berechnet. Dieses geschieht mit einer Support-Vektor-Maschine, die im Rahmen des Projektes Noise to Opportunity entwickelt wurde \cite{n2o}.\\
+Ist der Inhalt extrahiert wird er durch einen Service, auf Grund der zuvor hoch geladenen Firmenbroschüren, bewertet. Die Broschüren beschreiben genau ein Produkt im Detail. Die Gesamtheit aller Broschüren, die ein Produkt klassifizieren, bilden Produktcluster. Jeder Eintrag verweist mit einem Distanzvektor auf die ihm nächsten ähnlichen Broschüreneinträge. Soll nun ein gerade gewonnener Beitragsinhalt klassifiziert werden, werden die ihm ähnlichsten Broschüreneinträge berechnet. Über den K-Nearest-Neighbour wird nun bestimmt, zu welchem Produkt der Text des Beitrags am ähnlichsten ist. Ist der Beitrag einem bestimmten Produkt zugeordnet, wird anschließend der in dem Beitrag zum Ausdruck gebrachte Kaufbedarf berechnet. Dieses geschieht mit einer Support-Vektor-Maschine, die im Rahmen des Projektes Noise to Opportunity entwickelt wurde \cite{n2o}.\\
 Wird ein Beitrag einem Produkt zugeordnet und drückt dieser Beitrag einen Kaufwillen aus, wird er für die weitere Berechnung der Relevanz des Forums in Betracht gezogen.
 
 \subsubsection{Ermittelung der Datenbankgröße je Firmenprodukt}
-Die Links der Beiträge, die sowohl ein Produkt als auch einen Kaufwillen ausdrücken, werden gespeichert. Die Ermittlung der Datenbankgröße je Firmenprodukt erfolgt analog zu der Ermittlung der Gesamtdatenbankgröße des Forums. Die Formel \[\frac{u}{1-OR^{-1.1}}\] \cite{lu2008efficient} liefert auch hier die Größe der Datenbankeinträge, abgeschätzt aus dem Verhältnis der einzigartigen und sich überschneidenden Beiträge zurück.
+Die Links der Beiträge, die sowohl ein Produkt als auch einen Kaufwillen ausdrücken, werden gespeichert. Die Ermittlung der Datenbankgröße je Firmenprodukt erfolgt analog zu der Ermittlung der Gesamtdatenbankgröße des Forums. Die Formel \[|DB_{Produkt}|\frac{u}{1-OR^{-1.1}}\] \cite{lu2008efficient} liefert auch hier die Größe der Datenbankeinträge, abgeschätzt aus dem Verhältnis der einzigartigen und sich überschneidenden Beiträge zurück.
 Sollten mehr als 30\% der analysierten Beitragsinhalte zu einem Firmenprodukt einen Verkaufsbedarf ausdrücken, kann dieses Forum für die Firma als wichtig erachtet werden.
