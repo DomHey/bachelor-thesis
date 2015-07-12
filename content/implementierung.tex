@@ -110,7 +110,7 @@ loginattempt:
 remember: 'on',
 pwd:'AjZt198#ev'}
 \end{lstlisting}
-\caption{Eingehende Loginanfrage des Clients im Forum}
+\caption{Eingehende Loginanfrage des Programms im Forum}
 \end{figure}
 
 In Abbildung 6 ist zu sehen, dass alle erforderlichen Daten korrekt ausgefüllt wurden.
@@ -126,7 +126,7 @@ fname: 'Dominik',
 remember: 'on',
 pwd: 'AjZt198#ev'}
 \end{lstlisting}
-\caption{Eingehende Loginanfrage des Clients im Forum mit Nutzername und Email}
+\caption{Eingehende Loginanfrage des Programms im Forum mit Nutzername und Email}
 \end{figure}
 
 Auch etwaige versteckte Input-Felder werden korrekt gefunden und die Key-Value-Paare in dem POST-Request mit übergeben (Abbildung 8).
@@ -146,7 +146,7 @@ hiddenvalue: 'v1'}
 
 82 Loginseiten diverser im Internet gefundener Seiten wurden im händischen Test erfolgreich ausgefüllt und die zu erwartende Loginanfrage an den Server gesendet.\\
 Es ist programmtechnisch möglich sich in Foren automatisch zu registrieren und anzumelden. Im Folgenden müssen nach dem Loginvorgang nun noch relevante Posts zu den jeweiligen Firmenprodukten aus dem Forum extrahiert werden.\newline
-In Internetforen werden Nutzer, die sich gerade angemeldet haben, auf die Hauptseite des Forums verwiesen. Damit der Browser das umsetzt, wird in der Antwort des Servers nach demauf ein erfolgreiches Anmelden ein Statuscode 302 gesendet. Dieser zeigt an, dass der Browser eine andere URL ohne das Zutun des Nutzers laden soll. Die URL steht im Location-Header der Antwort. Dieses muss programmtechnisch realisiert werden, da sonst, ohne den Redirect, bei einer Analyse des HTML Quellcodes keine Suchform gefunden werden könnte, da immer die vorherige, also die Login-Seite analysiert werden würde.\\
+In Internetforen werden Nutzer, die sich gerade angemeldet haben, auf die Hauptseite des Forums verwiesen. Damit der Browser das umsetzt, wird in der Antwort des Servers nach demauf ein erfolgreiches Anmelden ein `Statuscode 302` gesendet. Dieser zeigt an, dass der Browser eine andere URL ohne das Zutun des Nutzers laden soll. Die URL steht im Location-Header der Antwort. Dieses muss programmtechnisch realisiert werden, da sonst, ohne den Redirect, bei einer Analyse des HTML Quellcodes keine Suchform gefunden werden kann. Es würde immer die vorherige, also die Login-Seite analysiert werden.\\
 Abbildung 9 zeigt einen Redirect nach einem erfolgreichen Login.
 
 \begin{figure}[ht]
@@ -158,7 +158,7 @@ http://localhost:12345/main
 \caption{Erfolgreicher Login im Forum und Redirect des Clients zur Hauptseite}
 \end{figure}
 
-Der Client überprüft bei jeder Anfrage an den Server, ob der Statuscode sich von 200 (OK) unterscheidet. Sollte es wie in diesem Fall ein 302 (Redirect) sein, wird automatisch die neue URL mit einem GET-Request nachgeladen, damit im nächsten Schritt das neue HTML analysiert werden kann. In diesem Fall wird die Hauptseite des Forums als nächstes geladen.
+Der Client überprüft bei jeder Anfrage an den Server, ob der Statuscode sich von `200` (OK) unterscheidet. Sollte es wie in diesem Fall ein `302` (Redirect) sein, wird automatisch die neue URL mit einem GET-Request nachgeladen, damit im nächsten Schritt das neue HTML analysiert werden kann. In diesem Fall wird die Hauptseite des Forums als Nächstes geladen.
 
 \subsubsection{Suchen im Forum}
 
@@ -188,14 +188,14 @@ Der Client erkennt automatisch, dass er auf eine andere Seite verwiesen wurde un
 \caption{Zu analysierendes HTML nach dem Redirect enthält die Suchform}
 \end{figure}
 
-Das HTML aus Abbildung 11 wird nach einer Suchform durchsucht. Diese befindet sich meist ein einer GET-Form. Da der Request ein GET-Request ist, wird das Suchwort in der URL codiert. Der Name des Key-Value-Paares, das für die Übermittlung zuständig ist, wird aus den Input-Feldern in der Form generiert. Dieses Attribut hat meist in den Namen `q` oder `search`. Der Client findet diese Suchform und sendet die Suchanfrage an den Server.
+Das HTML aus Abbildung 11 wird nach einer Suchform durchsucht. Sie befindet sich meist in einer `GET-Form`. Da der Request ein `GET-Request` ist, wird das Suchwort in der URL codiert. Der Name des Key-Value-Paares, das für die Übermittlung zuständig ist, wird aus den Input-Feldern in der Form generiert. Dieses Attribut hat meist in den Namen `q` oder `search`. Der Client findet diese Suchform und sendet die Suchanfrage an den Server.
 
 
 \begin{figure}[ht]
 \begin{lstlisting}[language=HTML5]
 { action: '/search', name: 'q' }
 \end{lstlisting}
-\caption{Vom Client analysierte Suchform, gefundener Name des Suchparameters und die Suchurl}
+\caption{Vom Client analysierte Suchform, gefundener Name des Suchparameters und die Such-URL}
 \end{figure}
 
 \newpage
@@ -211,7 +211,7 @@ Das HTML aus Abbildung 11 wird nach einer Suchform durchsucht. Diese befindet si
 \caption{Eingehende Suchanfragen im Forum }
 \end{figure}
 Im Forum geht eine valide Suchanfrage ein (Abbildung 13).
-Sollte das Suchwort im Titel oder im Beitragsinhalt vorkommen, wird der Link zu diesem Beitrag zurückgegeben. Dieser Link ist in dem Testforum eine eindeutige ID. Es ist anzunehmen, dass die Links in jedem Internetforum eine eindeutige ID für jeden Post darstellen, da sie auf genau eine feste Internetadresse verweisen. So wie in einem Internetforum werden pro Suchwort die ersten 20 Treffer zu diesem Suchwort auf einer HTML zusammengefasst und an den Client ausgeliefert. Der Client speichert alle Links und vermerkt, wie oft der Link bei unterschiedlichen Suchworten von dem Forum zurückgegeben wurde. Dazu wird das HTML nach allen vorkommenden Links durchsucht. Des weiteren sollten Links entfernt werden, die in mehr als der Hälfte der Suchanfragen zu finden sind, da es sich hierbei meist um statische Links handelt wie neueste Beiträge oder Links in den Navigationsleisten.
+Sollte das Suchwort im Titel oder im Beitragsinhalt vorkommen, wird der Link zu diesem Beitrag zurückgegeben. Dieser Link ist in dem Testforum eine eindeutige ID. Es ist anzunehmen, dass die Links in jedem Internetforum eine eindeutige ID für jeden Post darstellen, da sie auf genau eine feste Internetadresse verweisen. So wie in einem Internetforum werden pro Suchwort die ersten 20 Treffer zu diesem Suchwort auf einer HTML zusammengefasst und ausgeliefert. Das Programm speichert alle Links und vermerkt, wie oft der Link bei unterschiedlichen Suchworten von dem Forum zurückgegeben wurde. Dazu wird das HTML nach allen vorkommenden Links durchsucht. Des weiteren sollten Links entfernt werden, die in mehr als der Hälfte der Suchanfragen zu finden sind, da es sich hierbei meist um statische Links handelt wie neueste Beiträge oder Links in den Navigationsleisten.
 \newpage
 
 \begin{figure}[h!]
@@ -244,7 +244,7 @@ dispatcher.onGet("/search", function(req, res) {
 \end{figure}
 
 In Abbildung 14 wird für jede Suchanfrage das HTML erstellt, das die Links zu den jeweiligen passenden Dokumenten enthält. Diese Links stammen aus der Datenbankabfrage mit dem entsprechenden Suchwort.
-Ein statischer Link, der wiederum die statischen Links, auf Internetseiten simulieren soll, wird platziert. Er sollte danach vom Client wieder entfernt werden, da der Link in mehr als der Hälfte der Anfragen vorhanden ist und somit wahrscheinlich keinen Link zu einem Beitrag darstellt.
+Ein statischer Link, der wiederum die statischen Links, auf Internetseiten simulieren soll, wird platziert. Er sollte danach vom Programm wieder entfernt werden, da er in mehr als der Hälfte der Anfragen vorhanden ist und somit wahrscheinlich keinen Link zu einem Beitrag darstellt.
 
 \begin{figure}[h!]
 \begin{lstlisting}[language=HTML5]
@@ -274,12 +274,12 @@ Ein statischer Link, der wiederum die statischen Links, auf Internetseiten simul
 \caption{Gesammelte Dokumente des Clients auf die 10 Suchanfragen}
 \end{figure}
 
-Bei 10 Suchanfragen an die Datenbank (Abbildung 15) mit zufälligen englischen Wörtern wurden 6 Dokumente in der Testdatenbank gefunden (Abbildung 16). Keines wurde doppelt getroffen und der statische Link wurde entfernt. Die verbleibenden Links können nun mit einem GET-Request an den entsprechenden Link heruntergeladen und indexiert werden.
+Bei 10 Suchanfragen an die Datenbank (Abbildung 15) mit zufälligen englischen Wörtern wurden 6 Dokumente in der Testdatenbank gefunden (Abbildung 16). Keines wurde doppelt getroffen und der statische Link wurde entfernt. Die verbleibenden Links können nun mit einem `GET-Request` an den entsprechenden Link heruntergeladen und indexiert werden.
 \newpage
 
 \begin{figure}[h!]
 \includegraphics{./images/postdownload.png}
-\caption{Heruntergeladne HTML-Seiten der Beiträge der Suchanfragen}
+\caption{Heruntergeladene HTML-Seiten von Beiträgen der Suchanfragen}
 \end{figure}
 
 
