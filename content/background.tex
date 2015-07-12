@@ -1,10 +1,11 @@
 \section{Hintergrund}
 
+\subsection{Persönlicher Hintergrund}
 Im Rahmen des Bachelorprojektes am Hasso-Plattner-Institut wurde innerhalb eines Jahres die Softwarelösung `Noise to Opportunity` in einer Gruppe von 8 Personen entwickelt. `Noise to Opportunity` durchsucht soziale Medien und analysiert die gefundenen Beiträge. Drücken diese einen Kaufwunsch aus und können einem Unternehmensprodukt zugeordnet werden, werden diese an Vertreter weitergeleitet, die auf den Verkauf dieses Produktes spezilaisiert sind. Ich habe mich mit der Datenakquise beschäftigt. Dazu habe ich eine Vielzahl von Webseiten analysiert um die Registrierungs-, Einlogg- und Suchprozesse zu verstehen und programmtechnisch nachzubauen. Bei dieser Tätigkeit ist aufgefallen, dass die meisten Internetforen eine ähnliche Struktur besitzen. Anfänglich war die Herausforderung, sich mit einem händisch angelegten Nutzeraccount im Forum automatisch anzumelden und das Forum zu durchsuchen. Die Analyse der Webseiten ließ sich wiederholende Prozesse erkennen, so entstand die Idee, sich auch automatisch registrieren zu wollen.
 Viele der Registrierungsformen besitzen gleiche Attributnamen, die sie in dem HTML-Quellcode identifizieren. Der Registrierungsprozess folgt dem gleichen Schema und lässt sich demnach genau wie das Einloggen und das Suchen automatisieren. Es entstand die Idee ein Programm zu entwickeln, das automatisch Internetinhalte hinter POST- und GET- Formularen und des Deep- und Private Webs indizieren könnte. Wir sahen die Möglichkeit, eine Voraussage darüber zu treffen, wie viele Beiträge und wie viele Beiträge zu einem bestimmten Produkt in einem Forum vorhanden sind.
 Daraus entwickelte sich die These dieser Arbeit, ob es möglich sei, abzuschätzen wie verkaufsrelevant das Forum für Unternehmensprodukte ist.
 
-\subsection{Related Work}
+\subsection{Themenbezogene Arbeiten}
 
 Jianuguo Lu \cite{lu2008efficient} entwickelt in seiner Arbeit eine Formel, die eine Bestimmung der Datenbankgröße ermöglicht, wenn die Datenbank nur über ein Suchanfragen Interface angefragt werden kann. Er beschreibt die Abhängigkeit von der Anzahl der Suchanfragen zur Anzahl der Einträge, die auf eine Suchanfrage zurückgegeben werden. Getestet wird an Datenbanken mit bekannten Größen. Dabei wird eine Konvergenz zur realen Datenbankgröße ab 200 Suchanfragen festgestellt. Die Formel aus dem heterogenen Modell (Seite 1) ist die Grundlage für die Errechnung der Forendatenbank-Größe, sowie für die Errechnung der Datenbank-Größe für ein spezifisches Firmenprodukt.
 

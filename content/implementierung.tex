@@ -32,7 +32,7 @@ Accept AGB:<input type="checkbox" name="AGB"></br>
 \end{lstlisting}
 \caption{HTML-Code für die Erstellung einer Registrierungsseite, mit Nutzernamen, Email und Passwordfeldern, sowie Checkbox}
 \end{figure}
-
+\newpage
 Aus Abbildung 1 ist es leicht zu evaluieren, ob der Registrierungsprozess erfolgreich sein wird. Zu erwarten wäre ein `POST-Request` an die Toplevel Domain + Formaction mit den POST-Parametern `fname`, `email`, `re\_email`, `pwd`, `re\_pwd`, `AGB`, sowie den hidden Key-Value-Pairs, `val1 = hiddenvalue1` und `val2 = hiddenvalue2`.\\
 In die POST-Parameter sollten die entsprechenden Felder, `fname`, `email` und `pwd` jeweils der Name, die Email und das Passwort eingetragen, sowie in den re\_email, re\_pwd jeweils die Email und das Passwort bestätigt sein, indem sie wiederholt eingegeben sind.\\
 Ist der HTTP-Server gestartet und wird die Registrierungsseite analysiert und der folgende Request an den Server gesendet :
@@ -114,7 +114,6 @@ pwd:'AjZt198#ev'}
 \end{figure}
 
 In Abbildung 6 ist zu sehen, dass alle erforderlichen Daten korrekt ausgefüllt wurden.
-\newpage
 
 Abbildung 7 zeigt, dass, wenn die Loginform Usernamen und Email abfragen sollte, ein valider Loginrequest abgesendet wird.
 
@@ -159,6 +158,7 @@ http://localhost:12345/main
 \end{figure}
 
 Der Client überprüft bei jeder Anfrage an den Server, ob der Statuscode sich von `200` (OK) unterscheidet. Sollte es wie in diesem Fall ein `302` (Redirect) sein, wird automatisch die neue URL mit einem GET-Request nachgeladen, damit im nächsten Schritt das neue HTML analysiert werden kann. In diesem Fall wird die Hauptseite des Forums als Nächstes geladen.
+\newpage
 
 \subsubsection{Suchen im Forum}
 
@@ -175,7 +175,7 @@ redirecturl: /main
 \caption{Client folgt dem Redirect auf die Hauptseite des Forums}
 \end{figure}
 
-Der Client erkennt automatisch, dass er auf eine andere Seite verwiesen wurde und lädt diese. Das ist daran zu erkennen, dass das HTML, das im nächsten Schritt analysiert wird, nicht mehr das Login-HTML ist.
+Der Client erkennt automatisch, dass er auf eine andere Seite verwiesen wurde und lädt diese (Abbildung 10). Das ist daran zu erkennen, dass das HTML, das im nächsten Schritt analysiert wird, nicht mehr das Login-HTML ist.
 
 \begin{figure}[h!]
 \begin{lstlisting}[language=HTML5]
@@ -188,7 +188,7 @@ Der Client erkennt automatisch, dass er auf eine andere Seite verwiesen wurde un
 \caption{Zu analysierendes HTML nach dem Redirect enthält die Suchform}
 \end{figure}
 
-Das HTML aus Abbildung 11 wird nach einer Suchform durchsucht. Sie befindet sich meist in einer `GET-Form`. Da der Request ein `GET-Request` ist, wird das Suchwort in der URL codiert. Der Name des Key-Value-Paares, das für die Übermittlung zuständig ist, wird aus den Input-Feldern in der Form generiert. Dieses Attribut hat meist in den Namen `q` oder `search`. Der Client findet diese Suchform und sendet die Suchanfrage an den Server.
+Das HTML aus Abbildung 11 wird nach einer Suchform durchsucht. Sie befindet sich meist in einer `GET-Form`. Da der Request ein `GET-Request` ist, wird das Suchwort in der URL codiert. Der Name des Key-Value-Paares, das für die Übermittlung zuständig ist, wird aus den Input-Feldern in der Form generiert. Dieses Attribut hat meist in den Namen `q` oder `search`. Der Client findet diese Suchform (Abbildung 12) und sendet die Suchanfrage an den Server.
 
 
 \begin{figure}[ht]
@@ -197,8 +197,6 @@ Das HTML aus Abbildung 11 wird nach einer Suchform durchsucht. Sie befindet sich
 \end{lstlisting}
 \caption{Vom Client analysierte Suchform, gefundener Name des Suchparameters und die Such-URL}
 \end{figure}
-
-\newpage
 
 
 \begin{figure}[ht]
@@ -283,7 +281,7 @@ Bei 10 Suchanfragen an die Datenbank (Abbildung 15) mit zufälligen englischen W
 \end{figure}
 
 
-Es wurden erfolgreich die 6 Dokumente des Forums heruntergeladen, die das Forum auf die 10 Suchanfragen ausgeliefert hat.
+Es wurden erfolgreich die 6 Dokumente des Forums heruntergeladen, die das Forum auf die 10 Suchanfragen ausgeliefert hat (Abbildung 17).
 Damit ist gezeigt, das es möglich ist, sich automatisch in Foren zu registrieren, einzuloggen und nach bestimmten (firmenspezifischen) Schlagworten für Produkte zu suchen.
 \newpage
 
