@@ -1,10 +1,10 @@
 \section{Evaluation}
-\subsection{Bestimmung der Forenrelevanz}
+\subsection{Bestimmung der Datenbankgröße}
 
 Es geht darum zu evaluieren, ob eine Vorhersage darüber getroffen werden kann, wie groß eine Forendatenbank und wie relevant dieses Forum für den Verkauf eines Unternehmensproduktes ist.
 
 Es wird zunächst die Datenbankgröße bestimmt. Die Testdatenbank wurde in 3 Segemente geteilt. Segement 1 enthält nur Beiträge aus Forum 1, Segement 2 nur aus Forum 2 und Segement 3 nur Beiträge aus Forum 3. 
-Segement 1 und 2 beinhalten englische Beiträge, wohingegen Segement 3 meist deutsche Beiträge enthält. Die Postanzahl aller 3 Segemente ist bekannt. Um eine realistische Einschätzung zu erhalten, wie zuverlässig die Vorhersage der Gesamtdatenbankgröße ist, wurde der Test für jedes Segement 3 mal wiederholt. Ein Testdurchlauf besteht aus 3 mal 500 zufälligen Wörtern, die an die Datenbank in der passenden Sprache gesendet werden. Die ermittelten Datenbankgrößen nach 500 Wörtern werden addiert, durch die Gesamtanzahl der Testläufe dividiert und danach mit der bekannten Gesamtanzahl der Posts in dem Datenbanksegment verglichen.
+Segement 1 und 2 beinhalten englische Beiträge, wohingegen Segement 3 überwiegend deutsche Beiträge enthält. Die Postanzahl aller 3 Segemente ist bekannt. Um eine realistische Einschätzung zu erhalten, wie zuverlässig die Vorhersage der Gesamtdatenbankgröße ist, wurde der Test für jedes Segement 3 mal wiederholt. Ein Testdurchlauf besteht aus 3 mal 500 zufälligen Wörtern, die an die Datenbank in der passenden Sprache gesendet werden. Die ermittelten Datenbankgrößen nach 500 Wörtern werden addiert, durch die Gesamtanzahl der Testläufe dividiert und danach mit der bekannten Gesamtanzahl der Posts in dem Datenbanksegment verglichen.
 
 \begin{table}[h!]
 \begin{tabular}{ | p{3cm} | p{3cm} | p{3cm}| p{3cm} |} \hline
@@ -20,38 +20,25 @@ Fehler & +4\% & -5\% & -1\% \\ \hline
 \end{table}
 
 Der Fehler beträgt maximal 5\% . Dieses bestätigten die zwei weiteren Testdurchläufe. Damit ist eine Voraussage einer Forendatenbank bis auf 10\% Differenz genau möglich.
+\subsection{Bestimmung der Produktdatenbankgröße}
 
-Im nächsten Schritt sollen die einzelnen Produkte im Forum gesucht werden. Dazu werden beschreibende Wörter für jedes einzelne Produkt generiert. Diese Keywords werden gesucht und die Datenbankgröße aufgrund des Verhältnisses zwischen überlappenden und einzigartigen Dokumenten, mit der Formel  \[\frac{u}{1-OR^{-1.1}}\] \cite{lu2008efficient}, berechnet. Die zu Testzwecken verwendete Datenbank enthält 21220 Beiträge.
+Im nächsten Schritt sollen die einzelnen Produkte im Forum gesucht werden. Dazu werden beschreibende Wörter für jedes einzelne Produkt generiert. Diese Keywords werden gesucht und die Datenbankgröße aufgrund des Verhältnisses zwischen überlappenden und einzigartigen Dokumenten, mit der Formel  \[|DB_{Produkt} = \frac{u}{1-OR^{-1.1}}\] \cite{lu2008efficient}, berechnet. Die zu Testzwecken verwendete Datenbank enthält insgesamt 21220 Beiträge zu den Produkten CRM, HCM, ECOM, LVM und NONE. 10934 Beitäge konnten den Kategorien CRM, HCM, ECOM oder LVM zugeordnet werden (Abbildung 10), die restlichen sind in die Kategorie NONE eingeordnet.
 
 \begin{table}[h!]
 \centering 
-\begin{tabular}{ | p{3cm} | l |}
+\begin{tabular}{ | p{3cm} | l | | l | | l |}
 \hline
-Produkt & Anzahl der Dokumente in DB \\ \hline
-CRM & 2386 \\ \hline
-HCM & 3138 \\ \hline
-ECOM & 3641 \\ \hline
-LVM & 1769 \\ \hline
-Gesamt & 10934 \\ \hline
+Produkt & Anzahl der Dokumente in DB & Berechnet Anzahl & Fehler\\ \hline
+CRM & 2386 & 3800 & +59 \%\\ \hline
+HCM & 3138 & 9668 & +338 \%\\ \hline
+ECOM & 3641 & 10604 & +265 \%\\ \hline
+LVM & 1769 & 39541 & +2235 \%\\ \hline
+Gesamt & 10934 & 63613 & 582 \% \\ \hline
 \end{tabular}
-\caption{Anzahl der Dokumente je Kategorie in der Testdatenbank. Der Rest der Beiträge konnte keinem Produkt eindeutig zugeordnet werden}
+\caption{Anzahl der Dokumente je Kategorie in der Testdatenbank, sowie berechnete Größe der Produktdatenbanken mit Suchworten nach tf-idf Maß}
 \end{table}
 
-\newpage
-
-\begin{table}[h!]
-\begin{tabular}{ | p{3cm} | l | l |}
-\hline
-Produkt & Berechnete Anzahl der Dokumente in DB & Fehler\\ \hline
-CRM & 3800 & +59 \%\\ \hline
-HCM & 9668 & +338 \% \\ \hline
-ECOM & 10604 & +265 \%\\ \hline
-LVM & 39541 & +2235 \%\\ \hline
-\end{tabular}
-\caption{Errechnete Datenbankgröße nach Produkt mit Suchworten nach tf-idf Maß}
-\end{table}
-
-Zu verzeichnen ist, dass vom Programm die Größe der einzelnen Produktkategorien maßlos überschätzt wurde. Deshalb wird zur Ergebnisverbesserung ein zusätzlicher Schritt eingefügt. Es werden wie bisher die Keywords zu den jeweiligen Produkten im Forum gesucht, jedoch bevor der Post zur Berechnung des Gesamtkorpus beiträgt, durch einen Klassifizierungsservice \cite{n2o} analysiert. Dieser bestimmt aus einem gegebenen Text auf Grundlage der selben Broschüren die zur Berechnung der tf-idf- Keywords verwendet werden, welchem Produkt der Beiträge am ehesten entspricht.
+Zu verzeichnen ist, dass vom Programm die Größe der einzelnen Produktkategorien maßlos überschätzt wurde. Deshalb wird zur Ergebnisverbesserung ein zusätzlicher Schritt eingefügt. Es werden wie bisher die Keywords zu den jeweiligen Produkten im Forum gesucht, jedoch bevor der Post zur Berechnung des Gesamtkorpus beiträgt, durch einen Klassifizierungsservice \cite{n2o} analysiert. Dieser bestimmt aus einem gegebenen Text auf Grundlage der selben Broschüren die zur Berechnung der tf-idf- Keywords verwendet werden, welchem Produkt der Beitrag am ehesten entspricht.
 
 \begin{figure}[h!]
 \begin{lstlisting}[language=HTML5]
