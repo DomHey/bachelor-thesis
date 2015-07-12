@@ -1,0 +1,80 @@
+\begin{thebibliography}{1}
+  \providebibliographyfont{name}{}%
+  \providebibliographyfont{lastname}{}%
+  \providebibliographyfont{title}{\emph}%
+  \providebibliographyfont{jtitle}{\btxtitlefont}%
+  \providebibliographyfont{etal}{\emph}%
+  \providebibliographyfont{journal}{}%
+  \providebibliographyfont{volume}{}%
+  \providebibliographyfont{ISBN}{\MakeUppercase}%
+  \providebibliographyfont{ISSN}{\MakeUppercase}%
+  \providebibliographyfont{url}{\url}%
+  \providebibliographyfont{numeral}{}%
+  \expandafter\btxselectlanguage\expandafter {\btxfallbacklanguage}
+
+\expandafter\btxselectlanguage\expandafter {\btxfallbacklanguage}
+\bibitem {gupta2014comparative}
+\btxnamefont {Sonali \btxlastnamefont {Gupta}} \btxandlong {}\ \btxnamefont
+  {Komal\btxfnamespacelong Kumar \btxlastnamefont {Bhatia}}\btxauthorcolon\
+  \btxjtitlefont {\btxifchangecase {A comparative study of hidden web
+  crawlers}{A Comparative Study of Hidden Web Crawlers}}.
+\newblock \btxjournalfont {arXiv preprint arXiv:1407.5732}, 2014.
+
+\bibitem {lu2008efficient}
+\btxnamefont {Jianguo \btxlastnamefont {Lu}}\btxauthorcolon\ \btxtitlefont
+  {\btxifchangecase {Efficient estimation of the size of text deep web data
+  source}{Efficient estimation of the size of text deep web data source}}.
+\newblock \Btxinlong {}\ \btxtitlefont {Proceedings of the 17th ACM conference
+  on Information and knowledge management}, \btxpageslong {}\ 1485--1486. ACM,
+  2008.
+
+\bibitem {n2o}
+\btxnamefont {Patrick\btxfnamespacelong Hennig \btxlastnamefont
+  {Philipp~Berger}}\btxauthorcolon\ \btxtitlefont {\btxifchangecase
+  {Noise-to-opportunity conversion for social media posts}{Noise-To-Opportunity
+  Conversion for Social Media Posts}}.
+
+\bibitem {leopold2002zipfsche}
+\btxnamefont {Edda \btxlastnamefont {Leopold}}\btxauthorcolon\ \btxjtitlefont
+  {\btxifchangecase {Das zipfsche gesetz}{Das zipfsche gesetz}}.
+\newblock \btxjournalfont {Quantitative Linguistics}, 5(3):224--231, 2002.
+
+\bibitem {jiang2009selectivity}
+\btxnamefont {Fangjiao \btxlastnamefont {Jiang}}, \btxnamefont {Weiyi
+  \btxlastnamefont {Meng}}\btxandcomma {} \btxandlong {}\ \btxnamefont
+  {Xiaofeng \btxlastnamefont {Meng}}\btxauthorcolon\ \btxtitlefont
+  {\btxifchangecase {Selectivity estimation for exclusive query translation in
+  deep web data integration}{Selectivity estimation for exclusive query
+  translation in deep web data integration}}.
+\newblock \Btxinlong {}\ \btxtitlefont {Database Systems for Advanced
+  Applications}, \btxpageslong {}\ 595--600. Springer, 2009.
+
+\bibitem {ramos2003using}
+\btxnamefont {Juan \btxlastnamefont {Ramos}}\btxauthorcolon\ \btxtitlefont
+  {\btxifchangecase {Using tf-idf to determine word relevance in document
+  queries}{Using tf-idf to determine word relevance in document queries}}.
+\newblock \Btxinlong {}\ \btxtitlefont {Proceedings of the first instructional
+  conference on machine learning}, 2003.
+
+\bibitem {goodfellow2013multi}
+\btxnamefont {Ian\btxfnamespacelong J \btxlastnamefont {Goodfellow}},
+  \btxnamefont {Yaroslav \btxlastnamefont {Bulatov}}, \btxnamefont {Julian
+  \btxlastnamefont {Ibarz}}, \btxnamefont {Sacha \btxlastnamefont
+  {Arnoud}}\btxandcomma {} \btxandlong {}\ \btxnamefont {Vinay \btxlastnamefont
+  {Shet}}\btxauthorcolon\ \btxjtitlefont {\btxifchangecase {Multi-digit number
+  recognition from street view imagery using deep convolutional neural
+  networks}{Multi-digit number recognition from street view imagery using deep
+  convolutional neural networks}}.
+\newblock \btxjournalfont {arXiv preprint arXiv:1312.6082}, 2013.
+
+\bibitem {madhavan2008google}
+\btxnamefont {Jayant \btxlastnamefont {Madhavan}}, \btxnamefont {David
+  \btxlastnamefont {Ko}}, \btxnamefont {{\L}ucja \btxlastnamefont {Kot}},
+  \btxnamefont {Vignesh \btxlastnamefont {Ganapathy}}, \btxnamefont {Alex
+  \btxlastnamefont {Rasmussen}}\btxandcomma {} \btxandlong {}\ \btxnamefont
+  {Alon \btxlastnamefont {Halevy}}\btxauthorcolon\ \btxjtitlefont
+  {\btxifchangecase {Google's deep web crawl}{Google's deep web crawl}}.
+\newblock \btxjournalfont {Proceedings of the VLDB Endowment}, 1(2):1241--1252,
+  2008.
+
+\end{thebibliography}
