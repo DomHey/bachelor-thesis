@@ -22,29 +22,29 @@ Fehler & +4\% & -5\% & -1\% \\ \hline
 Die Fehlerquote beträgt maximal 5\%. Dieses bestätigten die zwei weiteren Testdurchläufe. Damit ist eine Voraussage einer Forendatenbank bis auf 10\% Differenz genau möglich.
 \subsection{Bestimmung der Produktdatenbankgröße}
 
-Im nächsten Schritt sollen die einzelnen Produkte im Forum gesucht werden. Dazu werden beschreibende Wörter für jedes einzelne Produkt generiert. Diese Keywords werden gesucht und die Datenbankgröße aufgrund des Verhältnisses zwischen überlappenden und einzigartigen Dokumenten, mit der Formel  \[|DB_{Produkt}| = \frac{u}{1-OR^{-1.1}}\] \cite{lu2008efficient}, berechnet. Die zu Testzwecken verwendete Datenbank enthält insgesamt 21220 Beiträge zu den Produkten CRM, HCM, ECOM, LVM und NONE. 10934 Beiträge konnten den Kategorien CRM, HCM, ECOM oder LVM zugeordnet werden (Abbildung 10), die restlichen sind der Kategorie NONE zugeordnet und spielen hier keine Rolle.
+Im nächsten Schritt sollen die einzelnen Produkte im Forum gesucht werden. Dazu werden beschreibende Wörter für jedes einzelne Produkt generiert. Diese Keywords werden gesucht und die Datenbankgröße aufgrund des Verhältnisses zwischen überlappenden und einmaligen Dokumenten mit der Formel  \[|DB_{Produkt}| = \frac{u}{1-OR^{-1.1}}\] \cite{lu2008efficient} berechnet. Die zu Testzwecken verwendete Datenbank enthält insgesamt 21.220 Beiträge zu den Produkten CRM, HCM, ECOM, LVM und NONE. 10.934 Beiträge konnten den Kategorien CRM, HCM, ECOM oder LVM zugeordnet werden (Abbildung 10), die restlichen sind der Kategorie NONE zugeordnet und spielen hier keine Rolle.
 
 \begin{table}[h!]
 \centering 
 \begin{tabular}{ | p{3cm} | l  | l | l |}
 \hline
-Produktkategorie & Anzahl der Dokumente in DB & Berechnete Anzahl & Fehler\\ \hline
+\textbf{Produktkategorie} & \textbf{Anzahl der Dokumente in DB} & \textbf{Berechnete Anzahl} & \textbf{Fehler}\\ \hline
 CRM & 2386 & 3800 & +59 \%\\ \hline
 HCM & 3138 & 9668 & +338 \%\\ \hline
 ECOM & 3641 & 10604 & +265 \%\\ \hline
 LVM & 1769 & 39541 & +2235 \%\\ \hline
 Gesamt & 10934 & 63613 & 582 \% \\ \hline
 \end{tabular}
-\caption{Anzahl der Dokumente je Produktkategorie in der Testdatenbank, sowie berechnete Größe der Produktdatenbanken mit Suchworten nach `tf-idf Maß`}
+\caption{Anzahl der Dokumente je Produktkategorie in der Testdatenbank sowie berechnete Größe der Produktdatenbanken mit Suchworten nach `tf-idf-Maß`}
 \end{table}
 
-Zu erkennen ist, dass vom Programm die Größe der einzelnen Produktkategorien maßlos überschätzt wurde. Deshalb wird zur Ergebnisverbesserung ein zusätzlicher Schritt eingefügt. Es werden wie bisher die Keywords zu den jeweiligen Produkten im Forum gesucht, jedoch bevor der Post zur Berechnung des Gesamtkorpus beiträgt, durch einen Klassifizierungsservice \cite{n2o} analysiert. Dieser bestimmt aus einem gegebenen Text auf Grundlage der selben Broschüren die zur Berechnung der `tf-idf- Keywords` verwendet werden, welchem Produkt die Beiträge am ehesten entsprechen.
+Zu erkennen ist, dass vom Programm die Größe der einzelnen Produktkategorien maßlos überschätzt wurde. Deshalb wird zur Ergebnisverbesserung ein zusätzlicher Schritt eingefügt. Es werden wie bisher die Keywords zu den jeweiligen Produkten im Forum gesucht, jedoch durch einen Klassifizierungsservice \cite{n2o} analysiert, bevor der Beitrag zur Berechnung des Gesamtkorpus beiträgt. Dieser bestimmt aus einem gegebenen Text auf Grundlage der selben Broschüren, die zur Berechnung der `tf-idf-Keywords` verwendet werden, welchem Produkt die Beiträge am ehesten entsprechen.
 
 \begin{figure}[h!]
 \begin{lstlisting}[language=HTML5]
 http://192.168.42.54:9001/predictions?text=Hi, I want to by an CRM product
 \end{lstlisting}
-\caption{Senden eines Testtextes an den Analyseservice}
+\caption{Senden eines Test-Textes an den Analyseservice}
 \end{figure}
 
 \newpage
@@ -79,13 +79,13 @@ http://192.168.42.54:9001/predictions?text=Hi, I want to by an CRM product
 \caption{Antwort des Analyseservices mit entsprechender Klassifizierung des Textes}
 \end{figure}
 
-Der Beitragstext (Abbildung 18) würde als CRM Beitrag richtig eingestuft werden (Abbildung 19). Wenn gerade die CRM Forendatenbankgröße berechnet werden soll, wird dieser Beitrag mit in die Berechnung einfließen. Alle Beiträge die als nicht CRM Beiträge eingestuft werden, werden in dieser spezifischen Ermittlung nicht betrachtet.\\
+Der Beitragstext (Abbildung 18) würde als CRM-Beitrag richtig eingestuft werden (Abbildung 19). Wenn gerade die CRM-Forendatenbankgröße berechnet werden sollte, wird dieser Beitrag mit in die Berechnung einfließen. Alle Beiträge, die als nicht CRM-Beiträge eingestuft werden, werden in dieser spezifischen Ermittlung nicht betrachtet.\\
 Mit maximal 100 generierten Keywords, gewichtet nach der höchsten `tf-Idf`, werden folgende Resultate erreicht:
 
 \begin{table}[h!]
 \begin{tabular}{ | p{3cm} | l | l |}
 \hline
-Produktkategorie & Berechnete Anzahl der Dokumente in DB & Fehler \\ \hline
+\textbf{Produktkategorie} & \textbf{Berechnete Anzahl der Dokumente in DB} & \textbf{Fehler} \\ \hline
 CRM & 2270 & -5\% \\ \hline
 HCM & 2730 & -14 \% \\ \hline
 ECOM & 4388 & +17\% \\ \hline
@@ -94,5 +94,5 @@ LVM & 1670 & -5\% \\ \hline
 \caption{Errechnete Datenbankgröße je Produkt mit sortierten `tf-idf` Wörtern und Analyseservice}
 \end{table}
 
-Die anderen 2 Testsegmente der Datenbank konnten mit ähnlich genauen Fehlerquoten überprüft werden.
-Ein Fehler von maximal 20\% mit nur maximal 100 Suchanfragen ist eine zufriedenstellende Größe. Aus der Datenbankgröße und den spezifischen Produktdatenbankgrößen lässt sich bestimmen, ob das Forum zum Verkauf eines Produktes geeignet ist oder nicht.
+Die übrigen 2 Testsegmente der Datenbank konnten mit ähnlich genauen Fehlerquoten überprüft werden.
+Eine Fehlerquote von maximal 20\% bei maximal 100 Suchanfragen ist eine zufriedenstellende Größe. Aus der Datenbankgröße und den spezifischen Produktdatenbankgrößen lässt sich bestimmen, ob das Forum zum Verkauf eines Produktes geeignet ist oder nicht.
