@@ -22,6 +22,7 @@ openbib,
 \definecolor{editorGreen}{rgb}{0.65, 0.88, 0.18}
 \definecolor{editorPink}{rgb}{0.9,0.15,0.45}
 
+
 %% LANGUAGES
 %%Javascript
 \lstdefinelanguage{JavaScript} {
@@ -191,8 +192,9 @@ Hiermit versichere ich, dass diese Arbeit selbst\"{a}ndig verfasst wurde und das
 	%\section*{Kurzfassung}{%% deutsche Zusammenfassung
 %Ziel dieser Arbeit ist es, für jedes getestete Internetforum automatisch einen numerischen Wert für das gesamte Internetforum zu erzeugen, der angibt, welches Produkt am wahrscheinlichsten in diesem Forum verkauft werden kann.\\  Damit wird dem Problem entgegengewirkt, dass in Internetforen immer mehr, immer schneller Posts veröffentlicht werden, die verkaufsirrelevant sind.Zum Erreichen dieses Ziels werden Unternehmensunterlagen analysiert, die ein bestimmtes Produkt klassifizieren, um Schlagworte zu extrahieren, die dieses Produkt beschreiben. Im Folgenden wird das Deep Web des Internetforums analysiert, also das Internet, das nicht frei zugänglich ist oder von Suchmaschinen indexiert werden kann.  Diese Analyse erlaubt es eine Aussage darüber zu treffen, wie viele Einträge in diesem Forum generell vorhanden sind sowie darüber, wie die Themenverteilung dieser Foreneinträge sich verhält. Anschließend werden von allen Firmenprodukten die zuvor extrahierten Produkt -Schlagworte in diesem Forum gesucht und alle Foreneinträge, die diese Suche ausliefert, gespeichert. Die gesammelten Einträge werden nun durch einen Service analysiert.  Dieser berechnet, mit welcher Wahrscheinlichkeit der Eintrag welcher Produktkategorie angehört und wie groß der Kaufbedarf an dem berechneten Produkt ist in diesem Eintrag ist. Ist ein Forum nach allen Firmenprodukten durchsucht, lässt sich mit der Gesamtanzahl der vorhandenen Foreneinträge und den berechneten Bedarfswahrscheinlichkeiten der Einträge bestimmen, für welches Produkt dieses Forum die höchste Verkaufswahrscheinlichkeit bietet, so dass die Datensammlung in diesem Forum auf das Produkt konzentriert werden kann, das den höchsten Kosten-Nutzen-Wert bietet.Dadurch können die Foren entlastet werden, da nicht mehr alle Foreneinträge aus ihnen abgefragt werden. Die Kosten für die Speicherung werden minimiert, da weniger, jedoch bessere Einträge mit einer höheren Verkaufschance gespeichert werden. Im gleichen Zuge wird die Zeit zwischen der Datensammlung und dem Erkennen einer wahren Verkaufschance drastisch sinken, da die Datenqualität, stark steigen wird, durch Konzentration auf ein Produkt mit der höchsten Verkaufschance in einem Forum.}
 \section*{Kurzfassung}{
-Ziel dieser Arbeit ist es, für jedes Internetforum abzuschätzen, wie gut sich mittels dieser Foren ein Firmenprodukt verkaufen lässt. Damit wirdt eine Steigerung der Verkaufseffizienz ermöglicht. Handelsvertreter eines Unternehmens können sich so auf die Analyse der Social Media Beiträge eines der Foren konzentrieren, in dem eine hohe Verkaufschance für eines der Produkte festgestellt wurde.\\
-Damit die Relevanz eines Forums quantifiziert werden kann, muss es programmtechnisch möglich sein, eine Registrierung und einen Login vorzunehmen, sowie eine Suche in diesem Forum durchzuführen. \\ Deshalb werden in dieser Arbeit die nötigen Schritte zum Indizieren von Daten hinter POST- und GET-Formularen beschrieben, damit Daten des `Private Webs` durchsuchbar gemacht werden können. Anschließend werden für Unternehmensprodukte Schlagworte generiert und in diesem Forum gesucht. Das Verhältnis zwischen einzigartigen und doppelten Beiträgen, die bei der Suche der Schlagworte zurückgegeben werden bestimmen, wie viele Beiträge sich insgesamt zu diesem Produkt in der Forendatenbank befinden. Aus dem Verhältnis von Produktdatenbankgröße und Forendatenbankgröße, sowie genauerer Analyse jedes Produktbeitrages wird eine Metrik abgeleitet, wie gut sich das Produkt in diesem Forum verkaufen lässt. Die Evaluation zeigt, dass es möglich ist automatisch Webseiten hinter POST-Formularen zu indizieren, die Forendatenbankgröße bis auf einen Fehler von 20\% abzuschätzen, sowie eine gute Vorhersage darüber zu treffen, welches Produkt sich in diesem Forum verkaufen lässt. Alle entwickelten Algorithmen wurden an einem lokalen Forum getestet und \textbf{dürfen nicht in Internet-Foren benutzt werden, die ein programmtechnisches Durchsuchen ihrer Seite in ihren AGBs ausschließen.}}
+In Zeiten des rasanten Internetwachstums entstehen immer mehr Foren, in denen Beiträge veröffentlicht werden, die möglicherweise die Salesmen eines Unternehmens für den Verkauf ihrer Produkte nutzen können. Das händische Durchsuchen eines jeden Forums ist zeittechnisch nicht realisierbar.
+Deshalb ist es wichtig für jedes Internetforum abzuschätzen, wie gut sich mittels dieser Foren ein Firmenprodukt verkaufen lässt. Damit wird eine Steigerung der Verkaufseffizienz ermöglicht. Salesmen eines Unternehmens können sich so auf die Analyse der Social Media Beiträge eines der Foren konzentrieren, in dem eine hohe Verkaufschance für eines der Produkte festgestellt wurde.\\
+Damit die Relevanz eines Forums quantifiziert werden kann, muss es programmtechnisch möglich sein, eine Registrierung und einen Login vorzunehmen, sowie eine Suche in diesem Forum durchzuführen. \\ Deshalb werden in dieser Arbeit die nötigen Schritte zum Indizieren von Daten hinter POST- und GET-Formularen beschrieben, damit Daten des `Private Webs` durchsuchbar gemacht werden können. Anschließend werden für Unternehmensprodukte Schlagworte generiert und in diesem Forum gesucht. Das Verhältnis zwischen einzigartigen und doppelten Beiträgen, die bei der Suche der Schlagworte zurückgegeben werden bestimmen, wie viele Beiträge sich insgesamt zu diesem Produkt in der Forendatenbank befinden. Aus dem Verhältnis von Produktdatenbankgröße und Forendatenbankgröße, sowie genauerer Analyse jedes Produktbeitrages wird eine Metrik abgeleitet, wie gut sich das Produkt in diesem Forum verkaufen lässt. Die Evaluation zeigt, dass es möglich ist automatisch Webseiten hinter POST-Formularen zu indizieren, die Forendatenbankgröße bis auf einen Fehler von 20\% abzuschätzen, sowie eine gute Vorhersage darüber zu treffen, welches Produkt sich in diesem Forum verkaufen lässt.}
 
 
 \newpage
@@ -206,11 +208,13 @@ Damit die Relevanz eines Forums quantifiziert werden kann, muss es programmtechn
 	%%%%%%%
 	%% Add content here !!! %%%
 	\input{./content/intro}
+	\input{./content/pers_back}
 	\input{./content/prerequisites}
 	\input{./content/implementierung}
 	\input{./content/evaluation}
-	\input{./content/conclusion}	
 	\input{./content/background}
+	\input{./content/conclusion}	
+
 	\clearpage
 	%%% BIBLIOGRAPHY
 	%\bibliographystyle{babunsrt3-fl}
