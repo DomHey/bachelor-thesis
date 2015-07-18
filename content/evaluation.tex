@@ -19,7 +19,7 @@ Fehler & +4\% & -5\% & -1\% \\ \hline
 \caption{Ermittelung der Datenbankgrößen mit zufälligen Wörtern}
 \end{table}
 
-Die Fehlerquote beträgt maximal 5\%. Dieses bestätigten die zwei weiteren Testdurchläufe. Damit ist eine Voraussage einer Forendatenbankgröße bis auf 10\% Differenz genau möglich.
+Die Fehlerquote beträgt maximal 5\%. Dieses bestätigten die zwei weiteren Testdurchläufe. Damit ist eine Voraussage einer Forendatenbankgröße bis auf 10\% Differenz genau möglich. Die Unterschiede in den berechneten Datenbankgrößen entstehen, in dem 500 zufällige Wörter im Forum gesucht werden. Damit wird das Verhältnis zwischen einmalig und doppelt getroffenen Dokumenten variieren und die Gesamtdatenbankgröße nie gleich groß sein.
 \subsection{Bestimmung der Produktdatenbankgröße}
 
 Im nächsten Schritt sollen die einzelnen Produkte im Forum gesucht werden. Dazu werden beschreibende Wörter für jedes einzelne Produkt generiert. Diese Keywords werden gesucht und die Datenbankgröße aufgrund des Verhältnisses zwischen überlappenden und einmaligen Dokumenten mit der Formel \[|DB_{Produkt}| = \frac{u}{1-OR^{-1.1}}\] \cite{lu2008efficient} berechnet. Die zu Testzwecken verwendete Datenbank enthält insgesamt 21.220 Beiträge zu den Produkten CRM, HCM, ECOM, LVM und NONE. 10.934 Beiträge konnten den Kategorien CRM, HCM, ECOM oder LVM zugeordnet werden (Tabelle 10), die restlichen sind der Kategorie NONE zugeordnet und spielen hier keine Rolle.
@@ -47,32 +47,24 @@ http://192.168.42.54:9001/predictions?text=Hi, I want to by an CRM product
 \caption{Senden eines Test-Textes an den Analyseservice}
 \end{figure}
 
-
-\newpage
-
 \begin{figure}[h!]
 \begin{lstlisting}[language=HTML5]
 {   "demand": 0.9999999999,
     "product": [
-        {
-            "product": "CRM",
-            "prob": 0.9999979024787202
+        { "product": "CRM",
+          "prob": 0.9999979024787202
         },
-        {
-            "product": "ECOM",
-            "prob": 0.0000020975212798552666
+        { "product": "ECOM",
+          "prob": 0.0000020975212798552666
         },
-        {
-            "product": "LVM",
-            "prob": 3.0982005787342066e-25
+        { "product": "LVM",
+          "prob": 3.0982005787342066e-25
         },
-        {
-            "product": "None",
-            "prob": 2.2462124385020632e-66
+        { "product": "None",
+          "prob": 2.2462124385020632e-66
         },
-        {
-            "product": "HCM",
-            "prob": 1.5018464896178129e-218
+        { "product": "HCM",
+          "prob": 1.5018464896178129e-218
         }
 		]
 }
