@@ -1,18 +1,18 @@
 \section{Prerequisites}
 A forum has to be searchable in order to evaluate how relevant it is for a company.
 A prerequisite for a programmatic search a forum is a successful login in the forum , either with an existing user account , or by an automatic registration and a login with the data you just created.
-Logging into the forum is a necessity, in order do reveal the hidden content and make it accessable for the program. Therefore, the theory of a successful register, login and search of forum will be described in this chapter.
+Logging into the forum is a necessity, in order do reveal the hidden content and make it accessable for the program. Therefore, the theory of a successful register, login and search of forum will be described in this chapter. For this, the registration and login pages form 100 randomly selected forums were analyzed.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%% Register %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection {Automatically register in forums}
-To access the content of a forum you often have to create an useraccount first. Aufterwards you can log in with this account and see the protected content of the data.\\
-Below are the steps described to enable an automated Register on websites. An overview of the registration process can be found in the appendix (Figure 20).
+To access the content of a forum you often have to create an user account first. Afterwards you can log in with this account and see the protected content of the data.\\
+Below are the steps described to enable an automated register on websites. An overview of the registration process can be found in the appendix (Figure 21).
 
 \subsubsection{Determination of the relevant forms in HTML web pages}
 On the corresponding registration page of the respective Forum , an analysis is done on the HTML source of the page.
-Each form tag is tracked form the website. A probability is calculated, that the found form element cointais all input elements for the registration process.\\
+Each form tag is tracked form the website. A probability is calculated, that the found form element contains all input elements for the registration process.\\
 points will be awarded if the attributes of the form contain certain keywords like `Signup`, `User`, `Register` e.g.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -51,7 +51,7 @@ keine Registrierung & 4 \\ \hline
 \end{table}
 
 If the registration form is found, existing in input fields are analyzed and weighted in order to determine which field is most likely for user name , password and e-mail address. This classification is based on specific tags, similar to the classification POST forms of HTML web pages.
-Thus, input fields that contain in their attributes words like ` login` , ` username` or `User` , are fields in which the user name has to be entered. A fixed value is added on top of the username score  for each occurance of these words. However if words like `Password` or `Email` occur a fixed value is added on top of the email or password score of the currently analyzed input field.
+Thus, input fields that contain in their attributes words like ` login` , ` username` or `User` , are fields in which the user name has to be entered. A fixed value is added on top of the username score  for each occurrence of these words. However if words like `Password` or `Email` occur a fixed value is added on top of the email or password score of the currently analyzed input field.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%% STATISTIK %%%%%%%%%%%%%%%%%%%%%
@@ -70,7 +70,8 @@ fullname & 2 \\ \hline
 \caption{Distribution of usernames parameter names in 100 forums}
 \end{table}
 
-10 sites did not require entering a user name , but only an indication of an email.
+Table 3 shows that 4 websites did not require a registration.
+10 sites did not require entering a user name , but only an indication of an email and a password. The name of the Email parameter is included in the distribution in Table 3.
 
 \begin{table}[h!]
 \centering 
@@ -97,11 +98,138 @@ useremail & 2 \\ \hline
 5 websites did not require any indication of an email for registration.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-Finally, the classificaion of the input field is based on the higest value of email-, password- and user name value. If all input fields are classified, all checkboxes are analyzed. These are meant to accept the board conditions, to stay logged in or to accept the newsletter of the particular forum. All checkboxes get checked. The newsletter does not annoy anyone because a spam email address is used for registering. \\
-Finally, all input fields with hidden hinput fields are dissected. Hidden input fields have the attribute `hidden` in their HTML code.
+Finally, the classificaion of the input field is based on the highest value of email-, password- and user name value. If all input fields are classified, all checkboxes are analyzed. These are meant to accept the board conditions, to stay logged in or to accept the newsletter of the particular forum. All checkboxes get checked. The newsletter does not annoy anyone because a spam email address is used for registering. \\
+Finally, all input fields with hidden input fields are dissected. Hidden input fields have the attribute `hidden` in their HTML code.
 These fields are meant to transmit additional data during the registering process and not meant to be edited by the user. Therefore the user can not fill in any information in hidden input fields because they are not visible on the website when rendered in the brwoser. They have to be transmitted because otherwise the parameters of the registration process would not be complete and the request invalid.
 
 \subsubsection{Submit of the registration request}
-With the prvious step, all relevant data have been collected for the registration process. Now, a random user name is generated. For this, the external service randomuser.me \footnote{http://api.randomuser.me/} is used. This services provides a valid email for 10 minutes. This email address is entered as value in each email input field.\\
-Now all key-value pairs of the post body are valid of the registration request and the request can be sent.
+With the previous step, all relevant data have been collected for the registration process. Now, a random user name is generated. For this, the external service randomuser.me~\footnote{http://api.randomuser.me/} is used.
+A call to this API returns JSON information about a generated user, including a random username. This is entered in the POST form as value for the key, which requires the username. \\
+Hereinafter, a password is generated that fits all safety criteria . That is uppercase and lowercase letters, special characters and at least 10 characters long. This is entered as value for each password-key.\\
+When you first register on a forum, an email is often sent from the forum to ensure that the applicant has a valid email specified during registration. This also serves to protect the forum from a programmatic registration.
+To always be able to specify a valid email address, an external service is used : `10minutemail.net~\footnote{https://10minutemail.net/}` which delivers a valid email address available for 10 minutes. If all key-value pairs are entered in the POST body of the registration request, the request can be sent to the forum because he is valid.
+The URL to which the registration POST body is sent, is made up of top-level domain of the website and the `action` value of POST form.
 
+\subsubsection {Confirm the registration link in the registration e-mail}
+After the registration request is received in the forum , a confirmation email is sent to the email address. The `10minute.net`-mail website is reloaded every 5 seconds, to identify potentially new e-mails. Because the page does not require login, the association between users and associated emails is solved with cookies. These cookies are passed in the response header to the client during the first visit of the website.
+If the cookies are passed during the reload of the website, new e-mails sent to this site can be retrieved. If the cookies are missing a new e-mail address would be created every time the page is reloaded.\\
+Now, if the e-mail of the forum found in the inbox, all hyperlinks are extracted from the e-mail content and called once with a `GET Request`. This ensures that the applied user profile is activated and validated in the forum and enabled for login.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%% LOGIN %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Automatic login into forums }
+The login is important to obtain the cookies from the website, which must be sent with each new request to the website again to validate that the request comes from a logged-in user. Thus, the protected area of the forum is available. An overview of the login process can be found in the appendix (Figure 22).
+
+\subsubsection {Determination of the relevant forms in HTML web pages}
+The determination of the relevant login form as well as input fields is based on the same principles of finding the relevant registration forms. First all POST forms are extracted from the HTML source code and then rated. The difference is that the number of input fields in the form would be between 2 and 3. The maximum amount of input fields can be e-mail username and password. The minimum , however, is your username or email and password. All forms with more input options are probably not the login form.
+If there is more than one form, which has 2-3 input fields, the input fields are considered in more detail. \\
+Do these contain in their attributes tags like `login`, `username` ,`password` or `email`, points are added on top of the form score for each occurrence. Furthermore, the input types of input forms are analyzed. If they consist of the combination input type = 'text' and input name = a combination of the words `login`,` email` or `username`, more points are added to the form score (Table 6).
+
+\[Inputtype = `text` \wedge Inputname \subseteq \{`login`,`username`,`email`\}\]
+\newpage
+\begin{table}[h!]
+\centering 
+\begin{tabular}{ | p{3cm} | p{3cm}|} \hline
+\textbf{Attributname} & \textbf{Anzahl} \\ \hline
+login & 79 \\ \hline
+email & 20 \\ \hline
+username & 16 \\ \hline
+password & 3 \\ \hline
+andere & 5 \\ \hline
+\end{tabular}
+\caption{Verteilung der Attributnamen in Loginformen in 100 Foren, mit Input-Typ = `text`}
+\end{table}
+
+The same applies to a combination of input type = `password` and input name = `password (Table 7).
+
+\[Inputtype = `password` \wedge Inputname = `password`\]
+
+\begin{table}[h!]
+\centering 
+\begin{tabular}{ | p{3cm} | p{3cm}|} \hline
+\textbf{Attributname} & \textbf{Anzahl} \\ \hline
+password & 83 \\ \hline
+pass & 3 \\ \hline
+pwd & 2 \\ \hline
+andere & 5 \\ \hline
+\end{tabular}
+\caption{Verteilung der Attributnamen in Loginformen in 100 Foren mit Input-Typ `password`}
+\end{table}
+
+4 forums, where no registration was required, also did not need a login. The missing 3 forums had the password input type `Text`. If the form has exactly one input field with the type `password`, an input field with the type `text` and a checkbox, this form is most likely the login form. It consists of a field for the user name or e-mail, a password field and a checkbox if the login data should be remembered for the next login.
+Form 100 tested sites, 66\% applied to this scheme.
+
+If all forms on the side are analyzed, the form with the highest probability for the login request is used. A classification of the input fields, whether they transmit the user name, e-mail or password has been created in the previous step, when the form score was calculated. Finally all additional input fields with the property `visibility = hidden` are saved in JSON format as key-value pairs, together with the name of the email, password and user name fields and their classification.
+
+\subsubsection{Submission of the login request}
+The request that is sent to the forum is a POST request because it must transmit the form data. For each classified input value the appropriate value like username email or password is set and sent to the forum. If this request fails, the remaining forms, which could be extracted from the HTML source code, are tried as a possible login forms.
+
+\subsubsection{Handling of cookies and redirects}
+The login attempt was successful, if a status code 200 was sent in the response header.
+Since the HTTP protocol can not save states , the Forum must be informed that this has been done after a successful login attempt at each request. Otherwise, the Forum would block access to the data. \\
+To ensure that cookies form a successful login are stored and sent with each new request to the forum. \\
+If the response header has a field `Location`, the forum redirects the user after a login to a new URL. This redirect is for the subsequent step important: Finding the search form in forums. The search form is located on the main page by 93\% of the tested forums. A redirect leads in most cases to this very page of the forum. Therefore, the URL that is located in the location header , is loaded by a GET-request and used for further processing. This ensures that a search form can be found in the analyzed HTML source code.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%% SUCHEN %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Relevance of a forum}
+\subsection {Determine the size of the forum database}
+It is important to know the approximate number of posts in the forum to make a statement about the ratio between forum database size and product-specific database size.
+If this ratio is too small , it is not worth to crawl this forum , because the time to find a product post which expresses a demand in this product will be too long and the search would not be profitable.
+
+\subsubsection {Determine the search field}
+In order to analyze the database , the search form must be found first. This search field can be found in most forums because the user has to be able to search the existing posts. For this, the HTML after successful login will be analyzed to find more form fields. Fields found are classified by the name attributes of the input fields of this form. If the name is a `q` or `search` (Table 8), points will be awarded. The `q` stands at most sites for the paramater `query` which transferes the search word. Afterwards attributes of the input fields are searched.
+
+\begin{table}[h!]
+\centering 
+\begin{tabular}{ | p{3cm} | p{3cm}|} \hline
+\textbf{Attributname} & \textbf{Anzahl} \\ \hline
+q & 53 \\ \hline
+search & 24 \\ \hline
+suche & 5 \\ \hline
+andere & 18 \\ \hline
+\end{tabular}
+\caption{Verteilung der Attributnamen in Suchformen in 100 Foren}
+\end{table}
+
+Finally, the form with the highest score is the form, which most likely contains the search form. Now the path for the search query is extracted by culling the value of the `action`-key. This value is added to the top-level domain and represents the search url.
+The query parameter is extracted from the name attribute of the input field and appended to the search url. If, for example, the name attribute of an input field would be q`` , the search url itself would be composed as following:
+
+\[ URL := `Domainname` + action + ?q= \]
+
+Words, which are relevant for determination of the database size, are appended to the query parameter `q` and send to the forum. The words which should determine the database are read from a file that lists the most frequently used words in a language in a sorted order. From this 500 words are drawn, pasted and sent in the url.
+
+\subsubsection{Calculation of the database size}
+The returned content is analyzed after each request. It contains all posts found by the forum's search engine for a specific word. Links to posts will be searched and saved. This procedure is repeated 500 times. Finally, the total number is calculated on acquired links, as well as the number of links, which are identical for different keywords. Links that appear in more than 50\% of the total requests are ignored, as this are static links that are on the search page. These links do not match posts that  generated from the search, but static elements on the HTML web page like navigation bar or the like. They would then distort the calculation of the size of the database and are therefore ignored. The final size of the database can be calculated using the formula
+\[|DB_{Gesamt}| = \frac{u}{1-OR^{-1.1}}\]. Here, \textit{u} is the number of unique documents and \textit{OR} the ratio of all to duplicate documents.
+The ratio of unique to multiple times found documents determines the size of the database \cite{lu2008efficient}.\\
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%% FORENRELEVANZ %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\subsection{Determine the relevance of a forum}
+In order to make a specific statement to if the currently analyzed forum is relevant for the sales strategy of a company, size of the forum and the number and quality of posts for selling products have to be analyzed as well. The ratio of total forum size, contribution number to each individual company product and the quality of the posts, considering the expressed demand to buy a company product, gives information about whether or not the forum can be deemed important for a company.
+
+\subsubsection{Generation of product tags}
+The determination of the total number of posts that are associated with a company product, is the same as determining the overall size of the forum's database.\\
+For this purpose, documents of the company are analyzed, which clearly describe the product. This can be brochures, web pages or PDF files that have been uploaded by the respective company.
+From these texts the most frequent words are extracted by `tf-idf-frequency`. Stopwords~\footnote{http://xpo6.com/list-of-english-stop-words/ besucht: 25.06.2015} are removed from this list, beacause if they would get searched, they would return posts that have nothing to do with the product we generated product tags for.\\
+If the list is generated , these words are searched using the search of the forum and retrieved links are stored and counted. In addition, any link found is called and downloaded by another `GET Request` to this page. The downloaded page indicates the same state as when a person would sign in with the browser and navigate to this post.
+All HTML tags will be removed from the document. The content is the first coherent text, which cointains 40 or more characters~\footnote{http://blog.viermalvier.at/die-richtige-laenge-von-social-media-postings-mit-infografik/ visited: 25/06/2015}, since that represents the optimal number of characters in a social media post.
+
+\subsubsection{Analysis of posts}
+If the content is extracted, it will be evaluated by a Classification Service due to the previously uploaded company brochures.The brochures describe one product in detail.
+The totality of all brochures that classify a product form product cluster. Each entry refers with distance vector to similar brochure entries. If a retrieved post content should be classified similar brochure entries are calculated.\\
+With the `K-nearest-neighbor algorithm`~\footnote{http://www.statsoft.com/textbook/k-nearest-neighbors visited : 10.07.2015} is calculated which product is most similar to the post content. Is the post associated with a particular product, the demand of buying a company product is determined next. This happens with a support vector machine, which was developed by Hennig and Berger \cite {n2o}. \\
+The post will be relevant for determining the relevancy of a forum, if it is assigned to a product and expresses a demand.
+
+\subsubsection{Determination of the database size per company product}
+The links of posts, which express both a product and a purchase will be stored. Determining the database size per company product is analogous to the determination of the total database size of the forum. The formula \[|DB_{Produkt}| = \frac{u}{1-OR^{-1.1}}\] \cite{lu2008efficient} returns again the size of the database entries , estimated from the ratio of unique to intersecting posts found.
+If more than 30\% of the analyzed post content express a need at a product, this forum can be deemed important for the company.
+
+\newpage
