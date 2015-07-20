@@ -1,0 +1,91 @@
+\section{Evaluation}
+\subsection{Determine the database size}
+The goal is to evaluate whether a prediction can be made how big the forum database size is and how relevant this forum is for selling a company product.
+
+First of all the database size is determined. The test database was divided into 3 parts. The first part contains posts from forum 1, the second part contains posts from forum 2 and the third forum contains only posts from forum 3. Parts 1 and 2 include English posts, whereas part 3 contains mostly German posts. The overall number of posts in each database part is known. In order to obtain a realistic assessment of how reliable the prediction of the total database size is , the test for each part was repeated 3 times. A test run sends 3 times 500 random words to the database in the appropriate language. The established database sizes after 500 words are added , divided by the total number of test runs and then compared to the known total number of articles in the database segment.
+
+\begin{table}[h!]
+\begin{tabular}{ | p{3cm} | p{3cm} | p{3cm}| p{3cm} |} \hline
+\textbf{Durchlauf} & \textbf{Anzahl Dok. in S1} & \textbf{Anzahl Dok. in S2} & \textbf{Anzahl Dok. in S3} \\ \hline
+1 & 12572 & 18374 & 8079 \\ \hline
+2 & 10400 & 21155 & 7896 \\ \hline
+3 & 15017 & 20952 & 8343 \\ \hline
+Arith. Mittel & 12663 & 20160 & 8016 \\ \hline
+org. Größe & 12133 & 21221 & 8184 \\ \hline
+Fehler & +4\% & -5\% & -1\% \\ \hline
+\end{tabular}
+\caption{Ermittelung der Datenbankgrößen mit zufälligen Wörtern}
+\end{table}
+
+The error rate did not exceed 5\%. This was confirmed by the two additional test runs. This shows that a prediction of a forum database size up to 10\% difference is exactly possible. The differences in the calculated database sizes arise because 500 random words are searched in the forum. Thus the ratio between unique and overlapping posts will vary and the total size of the database will never be the same.
+
+\subsection{Determining the product database size}
+In the next step the individual products are searched in the forum. Descriptive words are generated for each individual product.
+These keywords are searched and the database size calculated with the formula \[|DB_{Produkt}| = \frac{u}{1-OR^{-1.1}}\] \cite{lu2008efficient} based on the ratio between overlapping and unique documents. The database used for testing contains 21 220 posts for the products CRM, HCM, ECOM, LVM and NONE. 10,934 posts could be assigned to the categories CRM, HCM, ECOM or LVM (table 10), all remaining posts are assigned to the category NONE and will be irrelevant here.
+
+\begin{table}[h!]
+\centering 
+\begin{tabular}{ | p{3cm} | l | l | l |}
+\hline
+\textbf{Produktkategorie} & \textbf{Anzahl Dok. in DB} & \textbf{Berechnete Anzahl} & \textbf{Fehler}\\ \hline
+CRM & 2386 & 3800 & +59 \%\\ \hline
+HCM & 3138 & 9668 & +338 \%\\ \hline
+ECOM & 3641 & 10604 & +265 \%\\ \hline
+LVM & 1769 & 39541 & +2235 \%\\ \hline
+Gesamt & 10934 & 63613 & +582 \% \\ \hline
+\end{tabular}
+\caption{Anzahl der Dokumente je Produktkategorie in der Testdatenbank sowie berechnete Größe der Produktdatenbanken mit Suchworten nach `tf-idf-Maß`}
+\end{table}
+
+It can be seen that the size of each product category has been grossly overestimated by the program. Therefore, an additional step is added to improve the results. Keywords for each product will be still searched in the forum but before the post contributes to the calculation of the database corpus it gets analyzed by a classification service\cite{n2o}.
+This services determines which product matches the post, based on the same documents used for generating the `tf-idf-keywords`.
+
+\begin{figure}[h!]
+\begin{lstlisting}[language=HTML5]
+http://192.168.42.54:9001/predictions?text=Hi, I want to by an CRM product
+\end{lstlisting}
+\caption{Senden eines Test-Textes an den Analyseservice}
+\end{figure}
+
+\begin{figure}[h!]
+\begin{lstlisting}[language=HTML5]
+{   "demand": 0.9999999999,
+    "product": [
+        { "product": "CRM",
+          "prob": 0.9999979024787202
+        },
+        { "product": "ECOM",
+          "prob": 0.0000020975212798552666
+        },
+        { "product": "LVM",
+          "prob": 3.0982005787342066e-25
+        },
+        { "product": "None",
+          "prob": 2.2462124385020632e-66
+        },
+        { "product": "HCM",
+          "prob": 1.5018464896178129e-218
+        }
+		]
+}
+\end{lstlisting}
+\caption{Antwort des Analyseservices mit entsprechender Klassifizierung des Textes}
+\end{figure}
+
+The post text (figure 19) would be correctly classified as CRM post (Figure 20). If for example, the CRM forum database size should be calculated, this contribution will be included in the calculation.
+All posts that are not classifiable as a CRM posts, are not considered in this specific determination.\\
+With a maximum of 100 generated keywords, weighted according to the highest `tf-idf` the following results can be achieved: 
+
+\begin{table}[h!]
+\begin{tabular}{ | p{3cm} | l | l |}
+\hline
+\textbf{Produktkategorie} & \textbf{Berechnete Anzahl der Dokumente in DB} & \textbf{Fehler} \\ \hline
+CRM & 2270 & -5\% \\ \hline
+HCM & 2730 & -14 \% \\ \hline
+ECOM & 4388 & +17\% \\ \hline
+LVM & 1670 & -5\% \\ \hline
+\end{tabular}
+\caption{Errechnete Datenbankgröße je Produkt mit sortierten `tf-idf` Wörtern und Analyseservice}
+\end{table}
+
+The remaining 2 test segments of the database could be tested with similarly precise error rates. An error rate of no more than 20\% at a maximum of 100 search queries is a satisfying size. It can now be evaluated if the forum is suitable for selling a specific product by the sizes of the forum database and the product specific database.
